@@ -1,14 +1,10 @@
-﻿<Window x:Class="GroupClashes.GroupClashesInterface"
+﻿<UserControl x:Class="GroupClashes.GroupClashesInterface"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:NwApi="clr-namespace:Autodesk.Navisworks.Api;assembly=Autodesk.Navisworks.Api"
-        xmlns:NwControls="clr-namespace:Autodesk.Navisworks.Api.Controls;assembly=Autodesk.Navisworks.Controls"
-        xmlns:my="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration" Closed="Window_Closed"
-             mc:Ignorable="d" MinHeight="380"
-        Width="313.943" Title="Group Clashes" Height="397.99">
-    <Window.Resources>
+             mc:Ignorable="d" MinHeight="380" d:DesignWidth="246.5">
+    <UserControl.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Height" Value="23"/>
             <Setter Property="Width" Value="75"/>
@@ -29,7 +25,7 @@
         <Style TargetType="{x:Type RadioButton}">
             <Setter Property="Height" Value="18"/>
         </Style>
-    </Window.Resources>
+    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -77,4 +73,4 @@
             <Button Content="Cancel" IsCancel="True" Name="Cancel_Button"/>
         </StackPanel>
     </Grid>
-</Window>
+</UserControl>

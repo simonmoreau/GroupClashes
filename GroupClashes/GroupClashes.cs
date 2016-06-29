@@ -18,18 +18,41 @@ namespace GroupClashes
 
     class GroupClashes : AddInPlugin
     {
-        private GroupClashesInterface groupClashesInterface;
+        //private GroupClashesInterface groupClashesInterface;
+
         public override int Execute(params string[] parameters)
         {
-            groupClashesInterface.ShowDialog();
-            //theDialog.Setup();
-            //theDialog.ShowDialog();
+            if (Autodesk.Navisworks.Api.Application.IsAutomated)
+            {
+                throw new InvalidOperationException("Invalid when running using Automation");
+            }
+
+            //Find the plugin
+            PluginRecord pr = Application.Plugins.FindPlugin("GroupClashes.GroupClashesPane.BM42");
+
+            if (pr != null && pr is DockPanePluginRecord && pr.IsEnabled)
+            {
+                //check if it needs loading
+                if (pr.LoadedPlugin == null)
+                {
+                    pr.LoadPlugin();
+                }
+
+                DockPanePlugin dpp = pr.LoadedPlugin as DockPanePlugin;
+                if (dpp != null)
+                {
+                    //switch the Visible flag
+                    dpp.Visible = !dpp.Visible;
+                }
+            }
+
+            //groupClashesInterface.ShowDialog();
             return 0;
         }
 
         protected override void OnLoaded()
         {
-            groupClashesInterface = new GroupClashesInterface();
+            //groupClashesInterface = new GroupClashesInterface();
             //theDialog = new ClashGrouperDialog();
             //ClashGrouperUtils.Init();
         }

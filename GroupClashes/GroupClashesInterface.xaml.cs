@@ -18,7 +18,7 @@ namespace GroupClashes
     /// <summary>
     /// Interaction logic for GroupClashesInterface.xaml
     /// </summary>
-    public partial class GroupClashesInterface : Window
+    public partial class GroupClashesInterface : UserControl
     {
         public GroupClashesInterface()
         {
@@ -27,15 +27,15 @@ namespace GroupClashes
 
         private void Ok_Button_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
-            this.Close();
+            //this.DialogResult = true;
+            //this.Close();
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
 
-            this.DialogResult = false;
-            this.Close();
+            //this.DialogResult = false;
+            //this.Close();
         }
     }
 }
