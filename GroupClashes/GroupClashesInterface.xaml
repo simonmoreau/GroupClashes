@@ -10,6 +10,11 @@
             <Setter Property="Width" Value="75"/>
             <Setter Property="Margin" Value="0,0,6,0" />
         </Style>
+        <Style TargetType="{x:Type ProgressBar}">
+            <Setter Property="Height" Value="23"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="0,0,6,0" />
+        </Style>
         <Style TargetType="{x:Type GroupBox}">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -44,13 +49,16 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <ListView Grid.Column="0" Grid.Row="1" x:Name="listView">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <ListBox Grid.Column="0" Grid.Row="1" x:Name="ClashTestListBox" 
+                         ItemsSource="{Binding Path=ClashTests}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding DisplayName}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label Grid.Column="1" Grid.Row="1" Name="selectionALabel"  
+                       Content="{Binding ElementName=ClashTestListBox, Path=SelectedItem.DisplayName}"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" x:Name="methodGroupBox" Header="Clash Test">
@@ -69,8 +77,8 @@
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
-            <Button Content="OK" IsDefault="True" Name="Ok_Button" Click="Ok_Button_Click"/>
-            <Button Content="Cancel" IsCancel="True" Name="Cancel_Button"/>
+            <ProgressBar></ProgressBar>
+            <Button Content="Group" IsDefault="True" Name="Group_Button" Click="Group_Button_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>
