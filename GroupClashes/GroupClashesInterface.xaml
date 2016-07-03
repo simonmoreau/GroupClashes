@@ -10,10 +10,14 @@
             <Setter Property="Width" Value="75"/>
             <Setter Property="Margin" Value="0,0,6,0" />
         </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Height" Value="23"/>
+            <Setter Property="Width" Value="120"/>
+        </Style>
         <Style TargetType="{x:Type ProgressBar}">
             <Setter Property="Height" Value="23"/>
             <Setter Property="Width" Value="150"/>
-            <Setter Property="Margin" Value="0,0,6,0" />
+            <Setter Property="Margin" Value="0,0,6,0"/>
         </Style>
         <Style TargetType="{x:Type GroupBox}">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -61,7 +65,7 @@
                        Content="{Binding ElementName=ClashTestListBox, Path=SelectedItem.DisplayName}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" x:Name="methodGroupBox" Header="Clash Test">
+        <GroupBox Grid.Row="1" x:Name="methodGroupBox" Header="Grouping Mode">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -70,14 +74,22 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <ComboBox Grid.Row="0" x:Name="comboBox"/>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Label Content="Group by : "/>
+                    <ComboBox x:Name="comboBox">
+                        <ComboBoxItem Name="levelGrid">Levels and grids</ComboBoxItem>
+                        <ComboBoxItem Name="cbi2">Item2</ComboBoxItem>
+                        <ComboBoxItem Name="cbi3">Item3</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
                 <Grid Grid.Row="1" Height="50">
-                    <RadioButton Content="test"></RadioButton>
+                    <RadioButton Content="By Level"></RadioButton>
                 </Grid>
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
             <ProgressBar></ProgressBar>
+            <Button Content="Ungroup" Name="Ungroup_Button"/>
             <Button Content="Group" IsDefault="True" Name="Group_Button" Click="Group_Button_Click"/>
         </StackPanel>
     </Grid>

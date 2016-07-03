@@ -40,6 +40,7 @@ namespace GroupClashes
         {
             //this.DialogResult = true;
             //this.Close();
+            GroupingFunctions.GroupClashes((ClashTest)ClashTestListBox.SelectedItem);
         }
 
         private void GetClashTests()
