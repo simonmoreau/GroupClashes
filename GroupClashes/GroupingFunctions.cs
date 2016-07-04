@@ -10,14 +10,25 @@ namespace GroupClashes
 {
     class GroupingFunctions
     {
-        public static void GroupClashes(ClashTest selectedClashTest)
+        public static void GroupClashes(ClashTest selectedClashTest, GroupingMode mode)
         {
             //Get existing clash result
             IEnumerable<ClashResult> clashResults = GetIndividualClashResults(selectedClashTest);
-
+            List<ClashResultGroup> clashResultGroups = new List<ClashResultGroup>();
             //group all clashes
-            //List<ClashResultGroup> clashResultGroups = GroupByLevel(clashResults.ToList());
-            List<ClashResultGroup> clashResultGroups = GroupByGridIntersection(clashResults.ToList());
+            switch (mode)
+            {
+                case GroupingMode.ByLevel:
+                    clashResultGroups = GroupByLevel(clashResults.ToList());
+                    break;
+                case GroupingMode.ByGridIntersection:
+                    clashResultGroups = GroupByGridIntersection(clashResults.ToList());
+                    break;
+                case GroupingMode.BySelectionA:
+                case GroupingMode.BySelectionB:
+                    clashResultGroups = GroupByElementOfAGivenSelection(clashResults.ToList(),mode);
+                    break;
+            }
 
             //Remove groups with only one clash
             List<ClashResult> ungroupedClashResults = RemoveOneClashGroup(ref clashResultGroups);
@@ -81,24 +92,69 @@ namespace GroupClashes
             return groups.Values.ToList();
         }
 
-        private static List<ClashResultGroup> GroupByElementOfAGivenSelection(List<ClashResult> results)
+        private static List<ClashResultGroup> GroupByElementOfAGivenSelection(List<ClashResult> results,GroupingMode mode)
         {
             Dictionary<ModelItem, ClashResultGroup> groups = new Dictionary<ModelItem, ClashResultGroup>();
             ClashResultGroup currentGroup;
 
             foreach (ClashResult result in results)
             {
-                
                 //Cannot add original result to new clash test, so I create a copy
                 ClashResult copiedResult = (ClashResult)result.CreateCopy();
+                ModelItem modelItem = null;
 
-                ModelItem modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem1);
+                if (mode == GroupingMode.BySelectionA)
+                {
+                    modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem1);
+                }
+                else if (mode == GroupingMode.BySelectionB)
+                {
+                    modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem2);
+                }
 
                 if (!groups.TryGetValue(modelItem, out currentGroup))
                 {
                     currentGroup = new ClashResultGroup();
                     currentGroup.DisplayName = modelItem.DisplayName;
                     groups.Add(modelItem, currentGroup);
+                }
+                currentGroup.Children.Add(copiedResult);
+            }
+
+            return groups.Values.ToList();
+        }
+
+        private static List<ClashResultGroup> GroupByProperties(List<ClashResult> results, GroupingMode mode)
+        {
+            Dictionary<string, ClashResultGroup> groups = new Dictionary<string, ClashResultGroup>();
+            ClashResultGroup currentGroup;
+
+            foreach (ClashResult result in results)
+            {
+                //Cannot add original result to new clash test, so I create a copy
+                ClashResult copiedResult = (ClashResult)result.CreateCopy();
+                string clashProperty = null;
+
+                if (mode == GroupingMode.ByApprovedBy)
+                {
+                    clashProperty = copiedResult.ApprovedBy;
+                }
+                else if (mode == GroupingMode.ByAssignedTo)
+                {
+                    clashProperty = copiedResult.AssignedTo;
+                }
+                else if (mode == GroupingMode.ByStatus)
+                {
+                    clashProperty = copiedResult.Status.ToString();
+                }
+
+                if (string.IsNullOrEmpty(clashProperty)) { clashProperty = "Unset"; }
+
+                if (!groups.TryGetValue(clashProperty, out currentGroup))
+                {
+                    currentGroup = new ClashResultGroup();
+                    currentGroup.DisplayName = clashProperty;
+                    groups.Add(clashProperty, currentGroup);
                 }
                 currentGroup.Children.Add(copiedResult);
             }
@@ -204,5 +260,17 @@ namespace GroupClashes
         }
         #endregion
 
+    }
+
+    public enum GroupingMode
+    {
+        Ungroup,
+        ByLevel,
+        ByGridIntersection,
+        BySelectionA,
+        BySelectionB,
+        ByAssignedTo,
+        ByApprovedBy,
+        ByStatus
     }
 }
