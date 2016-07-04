@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" MinHeight="380" d:DesignWidth="246.5">
+             mc:Ignorable="d" MinHeight="380" Width="276.5">
     <UserControl.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Height" Value="23"/>
@@ -76,19 +76,26 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Label Content="Group by : "/>
-                    <ComboBox x:Name="comboBox">
-                        <ComboBoxItem Name="levelGrid">Levels and grids</ComboBoxItem>
+                    <ComboBox Name="comboBoxGroup">
+                        <ComboBoxItem Name="levels">Levels and grids</ComboBoxItem>
+                        <ComboBoxItem Name="gridIntersection">Grid Intersection</ComboBoxItem>
                         <ComboBoxItem Name="cbi2">Item2</ComboBoxItem>
                         <ComboBoxItem Name="cbi3">Item3</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
-                <Grid Grid.Row="1" Height="50">
-                    <RadioButton Content="By Level"></RadioButton>
-                </Grid>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Label Content="Then by : "/>
+                    <ComboBox Name="comboBoxThenBy">
+                        <ComboBoxItem Name="levels1">Levels and grids</ComboBoxItem>
+                        <ComboBoxItem Name="gridIntersection1">Grid Intersection</ComboBoxItem>
+                        <ComboBoxItem Name="cbi21">Item2</ComboBoxItem>
+                        <ComboBoxItem Name="cbi31">Item3</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
-            <ProgressBar></ProgressBar>
+            <!--<ProgressBar></ProgressBar>-->
             <Button Content="Ungroup" Name="Ungroup_Button"/>
             <Button Content="Group" IsDefault="True" Name="Group_Button" Click="Group_Button_Click"/>
         </StackPanel>

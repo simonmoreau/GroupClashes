@@ -83,24 +83,25 @@ namespace GroupClashes
 
         private static List<ClashResultGroup> GroupByElementOfAGivenSelection(List<ClashResult> results)
         {
-            Dictionary<GridIntersection, ClashResultGroup> groups = new Dictionary<GridIntersection, ClashResultGroup>();
+            Dictionary<ModelItem, ClashResultGroup> groups = new Dictionary<ModelItem, ClashResultGroup>();
             ClashResultGroup currentGroup;
 
-            //foreach (ClashResult result in results)
-            //{
-            //    //Cannot add original result to new clash test, so I create a copy
-            //    ClashResult copiedResult = (ClashResult)result.CreateCopy();
+            foreach (ClashResult result in results)
+            {
                 
-            //    GridIntersection closestIntersection = gridSystem.ClosestIntersection(copiedResult.Center);
+                //Cannot add original result to new clash test, so I create a copy
+                ClashResult copiedResult = (ClashResult)result.CreateCopy();
 
-            //    if (!groups.TryGetValue(closestIntersection, out currentGroup))
-            //    {
-            //        currentGroup = new ClashResultGroup();
-            //        currentGroup.DisplayName = closestIntersection.DisplayName;
-            //        groups.Add(closestIntersection, currentGroup);
-            //    }
-            //    currentGroup.Children.Add(copiedResult);
-            //}
+                ModelItem modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem1);
+
+                if (!groups.TryGetValue(modelItem, out currentGroup))
+                {
+                    currentGroup = new ClashResultGroup();
+                    currentGroup.DisplayName = modelItem.DisplayName;
+                    groups.Add(modelItem, currentGroup);
+                }
+                currentGroup.Children.Add(copiedResult);
+            }
 
             return groups.Values.ToList();
         }
@@ -186,6 +187,20 @@ namespace GroupClashes
             {
                 yield return (ClashResult)clashResultGroup.Children[i];
             }
+        }
+
+        private static ModelItem GetSignificantAncestorOrSelf(ModelItem Item)
+        {
+            ModelItem OriginalItem = Item;
+            ModelItem CurrentComposite = null;
+
+            //Get last composite item.
+            while (Item.Parent != null)
+            {
+                Item = Item.Parent;
+                if (Item.IsComposite) CurrentComposite = Item;
+            }
+            return CurrentComposite ?? OriginalItem;
         }
         #endregion
 
