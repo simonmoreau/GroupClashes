@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Navisworks.Api.Clash;
 using Autodesk.Navisworks.Api;
+using System.ComponentModel;
 
 namespace GroupClashes
 {
@@ -18,6 +19,8 @@ namespace GroupClashes
             //group all clashes
             switch (mode)
             {
+                case GroupingMode.None:
+                    return;
                 case GroupingMode.ByLevel:
                     clashResultGroups = GroupByLevel(clashResults.ToList());
                     break;
@@ -27,6 +30,11 @@ namespace GroupClashes
                 case GroupingMode.BySelectionA:
                 case GroupingMode.BySelectionB:
                     clashResultGroups = GroupByElementOfAGivenSelection(clashResults.ToList(),mode);
+                    break;
+                case GroupingMode.ByApprovedBy:
+                case GroupingMode.ByAssignedTo:
+                case GroupingMode.ByStatus:
+                    clashResultGroups = GroupByProperties(clashResults.ToList(), mode);
                     break;
             }
 
@@ -264,13 +272,21 @@ namespace GroupClashes
 
     public enum GroupingMode
     {
-        Ungroup,
+        [Description("<None>")]
+        None,
+        [Description("Level")]
         ByLevel,
+        [Description("Grid Intersection")]
         ByGridIntersection,
+        [Description("Selection A")]
         BySelectionA,
+        [Description("Selection B")]
         BySelectionB,
+        [Description("Assigned To")]
         ByAssignedTo,
+        [Description("Approved By")]
         ByApprovedBy,
+        [Description("Status")]
         ByStatus
     }
 }

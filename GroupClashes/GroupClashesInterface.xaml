@@ -51,7 +51,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="80" />
+                    <RowDefinition Height="70" />
                 </Grid.RowDefinitions>
                 <ListBox Grid.Row="0" x:Name="ClashTestListBox" 
                          ItemsSource="{Binding Path=ClashTests}">
@@ -72,7 +72,6 @@
                        Content="{Binding ElementName=ClashTestListBox, Path=SelectedItem.SelectionBName}"
                        ContentStringFormat="Selection B : {0}"/>
                 </StackPanel>
-
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" x:Name="methodGroupBox" Header="Grouping Mode">
@@ -87,10 +86,10 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Content="Group by : "/>
                 <ComboBox Grid.Column="1" Grid.Row="0" Name="comboBoxGroupBy"
-                              ItemsSource="{Binding Source={my:EnumerationExtension {x:Type my:GroupingMode}}}"
+                          ItemsSource="{Binding Source={my:EnumerationExtension {x:Type my:GroupingMode}}}"
                               DisplayMemberPath="Description"
                               SelectedValue="{Binding CurrentStatus}"
-                              SelectedValuePath="Value"  />
+                              SelectedValuePath="Value"/>
                 <Label Grid.Column="0" Grid.Row="1" Content="Then by : "/>
                 <ComboBox Grid.Column="1" Grid.Row="1" Name="comboBoxThenBy"
                               ItemsSource="{Binding Source={my:EnumerationExtension {x:Type my:GroupingMode}}}"
@@ -101,8 +100,11 @@
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
             <!--<ProgressBar></ProgressBar>-->
-            <Button Content="Ungroup" Name="Ungroup_Button"/>
-            <Button Content="Group" IsDefault="True" Name="Group_Button" Click="Group_Button_Click"/>
+            <Button Content="Ungroup" Name="Ungroup_Button"
+                    IsEnabled="False"/>
+            <Button Content="Group" IsDefault="True" Name="Group_Button"
+                    Click="Group_Button_Click"
+                    IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </UserControl>

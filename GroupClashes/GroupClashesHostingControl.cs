@@ -37,7 +37,6 @@ namespace GroupClashes
             wpfAddressCtrl.InitializeComponent();
             ctrlHost.Child = wpfAddressCtrl;
             ctrlHost.AutoSize = true;
-
         }
 
         protected override void OnVisibleChanged(EventArgs e)

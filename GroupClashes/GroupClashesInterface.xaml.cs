@@ -31,37 +31,50 @@ namespace GroupClashes
 
         public GroupClashesInterface()
         {
-            GetClashTests();
             InitializeComponent();
+            ClashTests = new ObservableCollection<CustomClashTest>();
+            RegisterClashTestChanges();
+            GetClashTests();
             this.DataContext = this;
-            
         }
 
         private void Group_Button_Click(object sender, WIN.RoutedEventArgs e)
         {
-            GroupingMode mode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxGroupBy.SelectedItem).Value ;
-            GroupingFunctions.GroupClashes((ClashTest)ClashTestListBox.SelectedItem,mode);
+            if (comboBoxGroupBy.SelectedItem != null)
+            {
+                GroupingMode mode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxGroupBy.SelectedItem).Value;
+                GroupingFunctions.GroupClashes((ClashTest)ClashTestListBox.SelectedItem, mode);
+            }
         }
 
-        private void GetClashTests()
+        private void RegisterClashTestChanges()
         {
             DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
             //Register
             DCT.Changed += DocumentClashTests_Changed;
-            ClashTests = new ObservableCollection<CustomClashTest>();
-            foreach (ClashTest test in DCT.Tests)
-            {
-                ClashTests.Add(new CustomClashTest(test));
-            }
         }
 
         void DocumentClashTests_Changed(object sender, SavedItemChangedEventArgs e)
+        {
+            GetClashTests();
+        }
+
+        private void GetClashTests()
         {
             DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
             ClashTests.Clear();
             foreach (ClashTest test in DCT.Tests)
             {
                 ClashTests.Add(new CustomClashTest(test));
+            }
+
+            if (ClashTests.Count != 0)
+            {
+                Group_Button.IsEnabled = true;
+            }
+            else
+            {
+                Group_Button.IsEnabled = false;
             }
         }
 
@@ -128,7 +141,7 @@ namespace GroupClashes
         public Type EnumType
         {
             get { return _enumType; }
-            private set
+            set
             {
                 if (_enumType == value) return;
                 var enumType = Nullable.GetUnderlyingType(value) ?? value;
