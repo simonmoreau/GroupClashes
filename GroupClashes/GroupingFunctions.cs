@@ -11,13 +11,14 @@ namespace GroupClashes
 {
     class GroupingFunctions
     {
-        public static void GroupClashes(ClashTest selectedClashTest, GroupingMode mode)
+        public static void GroupClashes(ClashTest selectedClashTest, GroupingMode groupingMode, GroupingMode renamingMode)
         {
             //Get existing clash result
             IEnumerable<ClashResult> clashResults = GetIndividualClashResults(selectedClashTest);
             List<ClashResultGroup> clashResultGroups = new List<ClashResultGroup>();
+
             //group all clashes
-            switch (mode)
+            switch (groupingMode)
             {
                 case GroupingMode.None:
                     return;
@@ -29,13 +30,19 @@ namespace GroupClashes
                     break;
                 case GroupingMode.BySelectionA:
                 case GroupingMode.BySelectionB:
-                    clashResultGroups = GroupByElementOfAGivenSelection(clashResults.ToList(),mode);
+                    clashResultGroups = GroupByElementOfAGivenSelection(clashResults.ToList(),groupingMode);
                     break;
                 case GroupingMode.ByApprovedBy:
                 case GroupingMode.ByAssignedTo:
                 case GroupingMode.ByStatus:
-                    clashResultGroups = GroupByProperties(clashResults.ToList(), mode);
+                    clashResultGroups = GroupByProperties(clashResults.ToList(), groupingMode);
                     break;
+            }
+
+            //Optionnaly, rename clash groups
+            if (renamingMode != GroupingMode.None)
+            {
+                RemaneGroupBySortingMode(ref clashResultGroups, renamingMode);
             }
 
             //Remove groups with only one clash
@@ -170,6 +177,51 @@ namespace GroupClashes
             return groups.Values.ToList();
         }
 
+        private static void RemaneGroupBySortingMode(ref List<ClashResultGroup> clashResultGroups, GroupingMode mode)
+        {
+            GridSystem gridSystem = Application.MainDocument.Grids.ActiveSystem;
+
+            foreach (ClashResultGroup clashResultGroup in clashResultGroups)
+            {
+                switch (mode)
+                {
+                    case GroupingMode.None:
+                        return;
+                    case GroupingMode.ByLevel:
+                        GridLevel closestLevel = gridSystem.ClosestIntersection(clashResultGroup.Center).Level;
+                        clashResultGroup.DisplayName = closestLevel.DisplayName + "_" + clashResultGroup.DisplayName;
+                        break;
+                    case GroupingMode.ByGridIntersection:
+                        GridIntersection closestIntersection = gridSystem.ClosestIntersection(clashResultGroup.Center);
+                        clashResultGroup.DisplayName = closestIntersection.DisplayName + "_" + clashResultGroup.DisplayName;
+                        break;
+                    case GroupingMode.BySelectionA:
+                    case GroupingMode.BySelectionB:
+                        break;
+                    case GroupingMode.ByApprovedBy:
+                        string approvedByValue = "N/A";
+                        if (!String.IsNullOrEmpty(clashResultGroup.ApprovedBy))
+                        {
+                            approvedByValue = clashResultGroup.ApprovedBy;
+                        }
+                        clashResultGroup.DisplayName = approvedByValue + "_" + clashResultGroup.DisplayName;
+                        break;
+                    case GroupingMode.ByAssignedTo:
+                        string assignedToValue = "N/A";
+                        if (!String.IsNullOrEmpty(clashResultGroup.AssignedTo))
+                        {
+                            assignedToValue = clashResultGroup.ApprovedBy;
+                        }
+                        clashResultGroup.DisplayName = assignedToValue + "_" + clashResultGroup.DisplayName;
+                        break;
+                    case GroupingMode.ByStatus:
+                        clashResultGroup.DisplayName = clashResultGroup.Status.ToString() + "_" + clashResultGroup.DisplayName;
+                        break;
+                }
+            }
+        }
+
+        
 
         #endregion
 

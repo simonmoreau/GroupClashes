@@ -40,11 +40,27 @@ namespace GroupClashes
 
         private void Group_Button_Click(object sender, WIN.RoutedEventArgs e)
         {
-            if (comboBoxGroupBy.SelectedItem != null)
+            if (ClashTestListBox.SelectedItem != null)
             {
-                GroupingMode mode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxGroupBy.SelectedItem).Value;
-                GroupingFunctions.GroupClashes((ClashTest)ClashTestListBox.SelectedItem, mode);
+                CustomClashTest selectedClashTest = (CustomClashTest)ClashTestListBox.SelectedItem;
+                ClashTest clashTest = selectedClashTest.ClashTest;
+
+                if (comboBoxGroupBy.SelectedItem != null)
+                {
+                    if (comboBoxThenBy.SelectedItem == null)
+                    {
+                        GroupingMode mode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxGroupBy.SelectedItem).Value;
+                        GroupingFunctions.GroupClashes(clashTest, mode, GroupingMode.None);
+                    }
+                    else
+                    {
+                        GroupingMode byMode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxGroupBy.SelectedItem).Value;
+                        GroupingMode thenByMode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxThenBy.SelectedItem).Value;
+                        GroupingFunctions.GroupClashes(clashTest, thenByMode, byMode);
+                    }
+                }
             }
+
         }
 
         private void RegisterClashTestChanges()
