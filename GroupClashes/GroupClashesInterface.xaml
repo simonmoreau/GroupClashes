@@ -86,22 +86,18 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Content="Group by : "/>
                 <ComboBox Grid.Column="1" Grid.Row="0" Name="comboBoxGroupBy"
-                          ItemsSource="{Binding Source={my:EnumerationExtension {x:Type my:GroupingMode}}}"
-                              DisplayMemberPath="Description"
-                              SelectedValue="{Binding CurrentStatus}"
-                              SelectedValuePath="Value"/>
+                          IsEnabled="False"
+                          ItemsSource="{Binding Path=GroupByList}"/>
                 <Label Grid.Column="0" Grid.Row="1" Content="Then by : "/>
                 <ComboBox Grid.Column="1" Grid.Row="1" Name="comboBoxThenBy"
-                              ItemsSource="{Binding Source={my:EnumerationExtension {x:Type my:GroupingMode}}}"
-                              DisplayMemberPath="Description"
-                              SelectedValue="{Binding CurrentStatus}"
-                              SelectedValuePath="Value"/>
+                          IsEnabled="False"
+                          ItemsSource="{Binding Path=GroupThenList}"/>
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
             <!--<ProgressBar></ProgressBar>-->
             <Button Content="Ungroup" Name="Ungroup_Button"
-                    IsEnabled="False"/>
+                    IsEnabled="False" Click="Ungroup_Button_Click"/>
             <Button Content="Group" IsDefault="True" Name="Group_Button"
                     Click="Group_Button_Click"
                     IsEnabled="False"/>

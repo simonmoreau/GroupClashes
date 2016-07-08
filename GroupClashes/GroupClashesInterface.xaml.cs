@@ -27,14 +27,23 @@ namespace GroupClashes
     public partial class GroupClashesInterface : UserControl
     {
         public ObservableCollection<CustomClashTest> ClashTests { get; set; }
+        public ObservableCollection<GroupingMode> GroupByList { get; set; }
+        public ObservableCollection<GroupingMode> GroupThenList { get; set; }
         public ClashTest SelectedClashTest { get; set; }
 
         public GroupClashesInterface()
         {
             InitializeComponent();
+
             ClashTests = new ObservableCollection<CustomClashTest>();
-            RegisterClashTestChanges();
+            GroupByList = new ObservableCollection<GroupingMode>();
+            GroupThenList = new ObservableCollection<GroupingMode>();
+
+            RegisterChanges();
+            
             GetClashTests();
+            CheckPlugin();
+            LoadComboBox();
             this.DataContext = this;
         }
 
@@ -44,35 +53,77 @@ namespace GroupClashes
             {
                 CustomClashTest selectedClashTest = (CustomClashTest)ClashTestListBox.SelectedItem;
                 ClashTest clashTest = selectedClashTest.ClashTest;
-
-                if (comboBoxGroupBy.SelectedItem != null)
+                
+                if (clashTest.Children.Count != 0)
                 {
-                    if (comboBoxThenBy.SelectedItem == null)
+                    if (comboBoxGroupBy.SelectedItem != null
+    || (GroupingMode)comboBoxGroupBy.SelectedItem == GroupingMode.None)
                     {
-                        GroupingMode mode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxGroupBy.SelectedItem).Value;
-                        GroupingFunctions.GroupClashes(clashTest, mode, GroupingMode.None);
-                    }
-                    else
-                    {
-                        GroupingMode byMode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxGroupBy.SelectedItem).Value;
-                        GroupingMode thenByMode = (GroupingMode)((EnumerationExtension.EnumerationMember)comboBoxThenBy.SelectedItem).Value;
-                        GroupingFunctions.GroupClashes(clashTest, thenByMode, byMode);
+                        //Unsubscribe temporarly
+                        UnRegisterChanges();
+
+                        if (comboBoxThenBy.SelectedItem == null
+                            || (GroupingMode)comboBoxThenBy.SelectedItem == GroupingMode.None)
+                        {
+                            GroupingMode mode = (GroupingMode)comboBoxGroupBy.SelectedItem;
+                            GroupingFunctions.GroupClashes(clashTest, mode, GroupingMode.None);
+                        }
+                        else
+                        {
+                            GroupingMode byMode = (GroupingMode)comboBoxGroupBy.SelectedItem;
+                            GroupingMode thenByMode = (GroupingMode)comboBoxThenBy.SelectedItem;
+                            GroupingFunctions.GroupClashes(clashTest, thenByMode, byMode);
+                        }
+
+                        //Resubscribe
+                        RegisterChanges();
                     }
                 }
             }
 
         }
 
-        private void RegisterClashTestChanges()
+        private void Ungroup_Button_Click(object sender, WIN.RoutedEventArgs e)
         {
+            if (ClashTestListBox.SelectedItem != null)
+            {
+                CustomClashTest selectedClashTest = (CustomClashTest)ClashTestListBox.SelectedItem;
+                ClashTest clashTest = selectedClashTest.ClashTest;
+
+                if (clashTest.Children.Count != 0)
+                {
+                    GroupingFunctions.UnGroupClashes(clashTest);
+                }
+            }
+        }
+
+        private void RegisterChanges()
+        {
+            //When the document change
+            Application.MainDocument.Database.Changed += DocumentClashTests_Changed;
+
+            //When a clash test change
             DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
             //Register
             DCT.Changed += DocumentClashTests_Changed;
         }
 
-        void DocumentClashTests_Changed(object sender, SavedItemChangedEventArgs e)
+        private void UnRegisterChanges()
+        {
+            //When the document change
+            Application.MainDocument.Database.Changed -= DocumentClashTests_Changed;
+
+            //When a clash test change
+            DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
+            //Register
+            DCT.Changed -= DocumentClashTests_Changed;
+        }
+
+        void DocumentClashTests_Changed(object sender, EventArgs e)
         {
             GetClashTests();
+            CheckPlugin();
+            LoadComboBox();
         }
 
         private void GetClashTests()
@@ -83,17 +134,52 @@ namespace GroupClashes
             {
                 ClashTests.Add(new CustomClashTest(test));
             }
+        }
 
-            if (ClashTests.Count != 0)
+        private void CheckPlugin()
+        {
+            //Inactive if there is no document open or there are no clash tests
+            if (Application.MainDocument == null
+                || Application.MainDocument.IsClear
+                || Application.MainDocument.GetClash() == null
+                || Application.MainDocument.GetClash().TestsData.Tests.Count == 0)
             {
-                Group_Button.IsEnabled = true;
+                Group_Button.IsEnabled = false;
+                comboBoxGroupBy.IsEnabled = false;
+                comboBoxThenBy.IsEnabled = false;
+                Ungroup_Button.IsEnabled = false;
             }
             else
             {
-                Group_Button.IsEnabled = false;
+                Group_Button.IsEnabled = true;
+                comboBoxGroupBy.IsEnabled = true;
+                comboBoxThenBy.IsEnabled = true;
+                Ungroup_Button.IsEnabled = true;
             }
         }
 
+        private void LoadComboBox()
+        {
+            GroupByList.Clear();
+            GroupThenList.Clear();
+
+            foreach (GroupingMode mode in Enum.GetValues(typeof(GroupingMode)).Cast<GroupingMode>())
+            {
+                GroupThenList.Add(mode);
+                GroupByList.Add(mode);
+            }
+
+            if (Application.MainDocument.Grids.ActiveSystem == null)
+            {
+                GroupByList.Remove(GroupingMode.GridIntersection);
+                GroupByList.Remove(GroupingMode.Level);
+                GroupThenList.Remove(GroupingMode.GridIntersection);
+                GroupThenList.Remove(GroupingMode.Level);
+            }
+
+            comboBoxGroupBy.SelectedIndex = 0;
+            comboBoxThenBy.SelectedIndex = 0;
+        }
     }
 
     public class CustomClashTest
@@ -141,61 +227,5 @@ namespace GroupClashes
             return result;
         }
 
-    }
-
-    public class EnumerationExtension : MarkupExtension
-    {
-        private Type _enumType;
-
-        public EnumerationExtension(Type enumType)
-        {
-            if (enumType == null) throw new ArgumentNullException("enumType");
-
-            EnumType = enumType;
-        }
-
-        public Type EnumType
-        {
-            get { return _enumType; }
-            set
-            {
-                if (_enumType == value) return;
-                var enumType = Nullable.GetUnderlyingType(value) ?? value;
-                if (enumType.IsEnum == false) throw new ArgumentException("Type must be an Enum.");
-                _enumType = value;
-            }
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            var enumValues = Enum.GetValues(EnumType);
-
-            return (
-              from object enumValue in enumValues
-              select new EnumerationMember
-              {
-                  Value = enumValue,
-                  Description = GetDescription(enumValue)
-              }).ToArray();
-        }
-
-        private string GetDescription(object enumValue)
-        {
-            var descriptionAttribute = EnumType
-              .GetField(enumValue.ToString())
-              .GetCustomAttributes(typeof(DescriptionAttribute), false)
-              .FirstOrDefault() as DescriptionAttribute;
-
-
-            return descriptionAttribute != null
-              ? descriptionAttribute.Description
-              : enumValue.ToString();
-        }
-
-        public class EnumerationMember
-        {
-            public string Description { get; set; }
-            public object Value { get; set; }
-        }
     }
 }

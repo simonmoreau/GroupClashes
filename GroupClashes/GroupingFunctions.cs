@@ -22,19 +22,19 @@ namespace GroupClashes
             {
                 case GroupingMode.None:
                     return;
-                case GroupingMode.ByLevel:
+                case GroupingMode.Level:
                     clashResultGroups = GroupByLevel(clashResults.ToList());
                     break;
-                case GroupingMode.ByGridIntersection:
+                case GroupingMode.GridIntersection:
                     clashResultGroups = GroupByGridIntersection(clashResults.ToList());
                     break;
-                case GroupingMode.BySelectionA:
-                case GroupingMode.BySelectionB:
+                case GroupingMode.SelectionA:
+                case GroupingMode.SelectionB:
                     clashResultGroups = GroupByElementOfAGivenSelection(clashResults.ToList(),groupingMode);
                     break;
-                case GroupingMode.ByApprovedBy:
-                case GroupingMode.ByAssignedTo:
-                case GroupingMode.ByStatus:
+                case GroupingMode.ApprovedBy:
+                case GroupingMode.AssignedTo:
+                case GroupingMode.Status:
                     clashResultGroups = GroupByProperties(clashResults.ToList(), groupingMode);
                     break;
             }
@@ -52,10 +52,26 @@ namespace GroupClashes
             ProcessClashGroup(clashResultGroups, ungroupedClashResults, selectedClashTest);
         }
 
+        public static void UnGroupClashes(ClashTest selectedClashTest)
+        {
+            List<ClashResultGroup> groups = new List<ClashResultGroup>();
+            List<ClashResult> results = GetIndividualClashResults(selectedClashTest).ToList();
+            List<ClashResult> copiedResult = new List<ClashResult>();
+
+            foreach (ClashResult result in results)
+            {
+                copiedResult.Add((ClashResult)result.CreateCopy());
+            }
+
+            //Process this empty group list and clashes into the clash test
+            ProcessClashGroup(groups, results, selectedClashTest);
+
+        }
+
         #region grouping functions
         private static List<ClashResultGroup> GroupByLevel(List<ClashResult> results)
         {
-            //TODO Check if the grid system exist
+            //I already check if it exists
             GridSystem gridSystem = Application.MainDocument.Grids.ActiveSystem;
             Dictionary<GridLevel, ClashResultGroup> groups = new Dictionary<GridLevel, ClashResultGroup>();
             ClashResultGroup currentGroup;
@@ -82,7 +98,7 @@ namespace GroupClashes
 
         private static List<ClashResultGroup> GroupByGridIntersection(List<ClashResult> results)
         {
-            //TODO Check if the grid system exist
+            //I already check if it exists
             GridSystem gridSystem = Application.MainDocument.Grids.ActiveSystem;
             Dictionary<GridIntersection, ClashResultGroup> groups = new Dictionary<GridIntersection, ClashResultGroup>();
             ClashResultGroup currentGroup;
@@ -118,11 +134,11 @@ namespace GroupClashes
                 ClashResult copiedResult = (ClashResult)result.CreateCopy();
                 ModelItem modelItem = null;
 
-                if (mode == GroupingMode.BySelectionA)
+                if (mode == GroupingMode.SelectionA)
                 {
                     modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem1);
                 }
-                else if (mode == GroupingMode.BySelectionB)
+                else if (mode == GroupingMode.SelectionB)
                 {
                     modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem2);
                 }
@@ -150,15 +166,15 @@ namespace GroupClashes
                 ClashResult copiedResult = (ClashResult)result.CreateCopy();
                 string clashProperty = null;
 
-                if (mode == GroupingMode.ByApprovedBy)
+                if (mode == GroupingMode.ApprovedBy)
                 {
                     clashProperty = copiedResult.ApprovedBy;
                 }
-                else if (mode == GroupingMode.ByAssignedTo)
+                else if (mode == GroupingMode.AssignedTo)
                 {
                     clashProperty = copiedResult.AssignedTo;
                 }
-                else if (mode == GroupingMode.ByStatus)
+                else if (mode == GroupingMode.Status)
                 {
                     clashProperty = copiedResult.Status.ToString();
                 }
@@ -186,19 +202,18 @@ namespace GroupClashes
                 switch (mode)
                 {
                     case GroupingMode.None:
+                    case GroupingMode.SelectionA:
+                    case GroupingMode.SelectionB:
                         return;
-                    case GroupingMode.ByLevel:
+                    case GroupingMode.Level:
                         GridLevel closestLevel = gridSystem.ClosestIntersection(clashResultGroup.Center).Level;
                         clashResultGroup.DisplayName = closestLevel.DisplayName + "_" + clashResultGroup.DisplayName;
                         break;
-                    case GroupingMode.ByGridIntersection:
+                    case GroupingMode.GridIntersection:
                         GridIntersection closestIntersection = gridSystem.ClosestIntersection(clashResultGroup.Center);
                         clashResultGroup.DisplayName = closestIntersection.DisplayName + "_" + clashResultGroup.DisplayName;
                         break;
-                    case GroupingMode.BySelectionA:
-                    case GroupingMode.BySelectionB:
-                        break;
-                    case GroupingMode.ByApprovedBy:
+                    case GroupingMode.ApprovedBy:
                         string approvedByValue = "N/A";
                         if (!String.IsNullOrEmpty(clashResultGroup.ApprovedBy))
                         {
@@ -206,7 +221,7 @@ namespace GroupClashes
                         }
                         clashResultGroup.DisplayName = approvedByValue + "_" + clashResultGroup.DisplayName;
                         break;
-                    case GroupingMode.ByAssignedTo:
+                    case GroupingMode.AssignedTo:
                         string assignedToValue = "N/A";
                         if (!String.IsNullOrEmpty(clashResultGroup.AssignedTo))
                         {
@@ -214,7 +229,7 @@ namespace GroupClashes
                         }
                         clashResultGroup.DisplayName = assignedToValue + "_" + clashResultGroup.DisplayName;
                         break;
-                    case GroupingMode.ByStatus:
+                    case GroupingMode.Status:
                         clashResultGroup.DisplayName = clashResultGroup.Status.ToString() + "_" + clashResultGroup.DisplayName;
                         break;
                 }
@@ -327,18 +342,18 @@ namespace GroupClashes
         [Description("<None>")]
         None,
         [Description("Level")]
-        ByLevel,
+        Level,
         [Description("Grid Intersection")]
-        ByGridIntersection,
+        GridIntersection,
         [Description("Selection A")]
-        BySelectionA,
+        SelectionA,
         [Description("Selection B")]
-        BySelectionB,
+        SelectionB,
         [Description("Assigned To")]
-        ByAssignedTo,
+        AssignedTo,
         [Description("Approved By")]
-        ByApprovedBy,
+        ApprovedBy,
         [Description("Status")]
-        ByStatus
+        Status
     }
 }

@@ -59,19 +59,6 @@ namespace GroupClashes
 
         public override CommandState CanExecute()
         {
-            try
-            {
-                //Inactive if there is no document open or there are no clash tests
-                if (Application.MainDocument == null
-                    || Application.MainDocument.IsClear
-                    || Application.MainDocument.GetClash() == null
-                    || Application.MainDocument.GetClash().TestsData.Tests.Count == 0)
-                    return new CommandState(false);
-            }
-            catch
-            {
-                return new CommandState(false);
-            }
             return new CommandState(true);
         }
     }
