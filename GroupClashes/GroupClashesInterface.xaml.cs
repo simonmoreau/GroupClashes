@@ -41,9 +41,6 @@ namespace GroupClashes
 
             RegisterChanges();
             
-            GetClashTests();
-            CheckPlugin();
-            LoadComboBox();
             this.DataContext = this;
         }
 
@@ -92,7 +89,13 @@ namespace GroupClashes
 
                 if (clashTest.Children.Count != 0)
                 {
+                    //Unsubscribe temporarly
+                    UnRegisterChanges();
+
                     GroupingFunctions.UnGroupClashes(clashTest);
+
+                    //Resubscribe
+                    RegisterChanges();
                 }
             }
         }
@@ -106,6 +109,11 @@ namespace GroupClashes
             DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
             //Register
             DCT.Changed += DocumentClashTests_Changed;
+
+            //Get all clash tests and check up to date
+            GetClashTests();
+            CheckPlugin();
+            LoadComboBox();
         }
 
         private void UnRegisterChanges()

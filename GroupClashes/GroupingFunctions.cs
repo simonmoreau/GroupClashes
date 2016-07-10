@@ -64,7 +64,7 @@ namespace GroupClashes
             }
 
             //Process this empty group list and clashes into the clash test
-            ProcessClashGroup(groups, results, selectedClashTest);
+            ProcessClashGroup(groups, copiedResult, selectedClashTest);
 
         }
 
