@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ApplicationPackage>
-
   <Components Description="2017 parts">
     <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw14" SeriesMax="Nw14" />
     <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v14/ADSK.MyPlugin.v14.dll">
@@ -12,5 +11,9 @@
     <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v13/ADSK.MyPlugin.v13.dll">
     </ComponentEntry>
   </Components>
-
+    <Components Description="2015 parts">
+    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw12" SeriesMax="Nw13" />
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v12/ADSK.MyPlugin.v12.dll">
+    </ComponentEntry>
+  </Components>
 </ApplicationPackage>

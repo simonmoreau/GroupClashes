@@ -95,7 +95,9 @@
     <Content Include="Icons\GroupClashesIcon_Small.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="PackageContents.xml.xml" />
+    <Content Include="PackageContents.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
