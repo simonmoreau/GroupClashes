@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Navisworks.Api.Clash;
 using Autodesk.Navisworks.Api.Plugins;
 using Autodesk.Navisworks.Api;
+using Autodesk.Windows;
 
 namespace GroupClashes
 {
     // AddIn plugin to show/hide the Group Clashes Addin 
-    
     [PluginAttribute("GroupClashes", "BM42", 
         ToolTip = "Groups clashes according to the items involved", 
         DisplayName = "Group Clashes")]
-    [AddInPluginAttribute(AddInLocation.AddIn, LoadForCanExecute = true)]
+    [AddInPluginAttribute(AddInLocation.AddIn,
+        Icon = "GroupClashesIcon_Small.ico",
+        LargeIcon = "GroupClashesIcon_Large.ico", 
+        LoadForCanExecute = true)]
 
     class GroupClashes : AddInPlugin
     {
@@ -52,15 +56,15 @@ namespace GroupClashes
 
         protected override void OnLoaded()
         {
-            //groupClashesInterface = new GroupClashesInterface();
-            //theDialog = new ClashGrouperDialog();
-            //ClashGrouperUtils.Init();
+            //Debug.WriteLine("Loaded");
         }
 
         public override CommandState CanExecute()
         {
             return new CommandState(true);
         }
+
+        
     }
 }
 

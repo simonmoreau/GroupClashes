@@ -85,7 +85,9 @@ namespace GroupClashes
                 if (!groups.TryGetValue(closestLevel, out currentGroup))
                 {
                     currentGroup = new ClashResultGroup();
-                    currentGroup.DisplayName = closestLevel.DisplayName;
+                    string displayName = closestLevel.DisplayName;
+                    if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Level"; }
+                    currentGroup.DisplayName = displayName;
                     groups.Add(closestLevel, currentGroup);
                 }
                 currentGroup.Children.Add(copiedResult);
@@ -112,7 +114,9 @@ namespace GroupClashes
                 if (!groups.TryGetValue(closestIntersection, out currentGroup))
                 {
                     currentGroup = new ClashResultGroup();
-                    currentGroup.DisplayName = closestIntersection.DisplayName;
+                    string displayName = closestIntersection.DisplayName;
+                    if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Intersection"; }
+                    currentGroup.DisplayName = displayName;
                     groups.Add(closestIntersection, currentGroup);
                 }
                 currentGroup.Children.Add(copiedResult);
@@ -146,7 +150,9 @@ namespace GroupClashes
                 if (!groups.TryGetValue(modelItem, out currentGroup))
                 {
                     currentGroup = new ClashResultGroup();
-                    currentGroup.DisplayName = modelItem.DisplayName;
+                    string displayName = modelItem.DisplayName;
+                    if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Parent"; }
+                    currentGroup.DisplayName = displayName;
                     groups.Add(modelItem, currentGroup);
                 }
                 currentGroup.Children.Add(copiedResult);
@@ -179,7 +185,7 @@ namespace GroupClashes
                     clashProperty = copiedResult.Status.ToString();
                 }
 
-                if (string.IsNullOrEmpty(clashProperty)) { clashProperty = "Unset"; }
+                if (string.IsNullOrEmpty(clashProperty)) { clashProperty = "Unspecified"; }
 
                 if (!groups.TryGetValue(clashProperty, out currentGroup))
                 {
@@ -199,6 +205,7 @@ namespace GroupClashes
 
             foreach (ClashResultGroup clashResultGroup in clashResultGroups)
             {
+                string displayName = "";
                 switch (mode)
                 {
                     case GroupingMode.None:
@@ -207,11 +214,15 @@ namespace GroupClashes
                         return;
                     case GroupingMode.Level:
                         GridLevel closestLevel = gridSystem.ClosestIntersection(clashResultGroup.Center).Level;
-                        clashResultGroup.DisplayName = closestLevel.DisplayName + "_" + clashResultGroup.DisplayName;
+                        displayName = closestLevel.DisplayName;
+                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Level"; }
+                        clashResultGroup.DisplayName = displayName + "_" + clashResultGroup.DisplayName;
                         break;
                     case GroupingMode.GridIntersection:
                         GridIntersection closestIntersection = gridSystem.ClosestIntersection(clashResultGroup.Center);
-                        clashResultGroup.DisplayName = closestIntersection.DisplayName + "_" + clashResultGroup.DisplayName;
+                        displayName = closestIntersection.DisplayName;
+                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Intersection"; }
+                        clashResultGroup.DisplayName = displayName + "_" + clashResultGroup.DisplayName;
                         break;
                     case GroupingMode.ApprovedBy:
                         string approvedByValue = "N/A";

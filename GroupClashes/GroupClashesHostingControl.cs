@@ -18,8 +18,8 @@ namespace GroupClashes
 
     public partial class GroupClashesHostingControl : UserControl
     {
-        private ElementHost ctrlHost;
-        private GroupClashesInterface wpfAddressCtrl;
+        private ElementHost _ctrlHost;
+        private GroupClashesInterface _wpfAddressCtrl;
         private Panel _hostPanel;
 
         public GroupClashesHostingControl()
@@ -29,14 +29,14 @@ namespace GroupClashes
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ctrlHost = new ElementHost();
-            this.Controls.Add(ctrlHost);
-            ctrlHost.Dock = DockStyle.Fill;
+            _ctrlHost = new ElementHost();
+            this.Controls.Add(_ctrlHost);
+            _ctrlHost.Dock = DockStyle.Fill;
 
-            wpfAddressCtrl = new GroupClashesInterface();
-            wpfAddressCtrl.InitializeComponent();
-            ctrlHost.Child = wpfAddressCtrl;
-            ctrlHost.AutoSize = true;
+            _wpfAddressCtrl = new GroupClashesInterface();
+            _wpfAddressCtrl.InitializeComponent();
+            _ctrlHost.Child = _wpfAddressCtrl;
+            _ctrlHost.AutoSize = true;
         }
 
         protected override void OnVisibleChanged(EventArgs e)

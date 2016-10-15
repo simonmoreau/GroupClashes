@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WIN = System.Windows;
 using System.Windows.Controls;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Markup;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -106,9 +107,9 @@ namespace GroupClashes
             Application.MainDocument.Database.Changed += DocumentClashTests_Changed;
 
             //When a clash test change
-            DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
+            DocumentClashTests dct = Application.MainDocument.GetClash().TestsData;
             //Register
-            DCT.Changed += DocumentClashTests_Changed;
+            dct.Changed += DocumentClashTests_Changed;
 
             //Get all clash tests and check up to date
             GetClashTests();
@@ -122,9 +123,9 @@ namespace GroupClashes
             Application.MainDocument.Database.Changed -= DocumentClashTests_Changed;
 
             //When a clash test change
-            DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
+            DocumentClashTests dct = Application.MainDocument.GetClash().TestsData;
             //Register
-            DCT.Changed -= DocumentClashTests_Changed;
+            dct.Changed -= DocumentClashTests_Changed;
         }
 
         void DocumentClashTests_Changed(object sender, EventArgs e)
@@ -132,15 +133,20 @@ namespace GroupClashes
             GetClashTests();
             CheckPlugin();
             LoadComboBox();
+
         }
 
         private void GetClashTests()
         {
-            DocumentClashTests DCT = Application.MainDocument.GetClash().TestsData;
+            DocumentClashTests dct = Application.MainDocument.GetClash().TestsData;
             ClashTests.Clear();
-            foreach (ClashTest test in DCT.Tests)
+
+            foreach (SavedItem savedItem in dct.Tests)
             {
-                ClashTests.Add(new CustomClashTest(test));
+                if (savedItem.GetType() == typeof (ClashTest))
+                {
+                    ClashTests.Add(new CustomClashTest(savedItem as ClashTest));
+                }
             }
         }
 
