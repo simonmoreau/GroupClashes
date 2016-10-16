@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="AdWindows">
       <HintPath>..\..\..\..\..\Program Files\Autodesk\Navisworks Manage 2017\AdWindows.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1294.5, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
