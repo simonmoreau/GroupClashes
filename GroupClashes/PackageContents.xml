@@ -3,17 +3,17 @@
 <ApplicationPackage>
   <Components Description="2017 parts">
     <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw14" SeriesMax="Nw14" />
-    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v14/GroupClashes.dll">
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v14/GroupClashes.BM42.dll">
     </ComponentEntry>
   </Components>
   <Components Description="2016 parts">
     <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw13" SeriesMax="Nw13" />
-    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v13/GroupClashes.dll">
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v13/GroupClashes.BM42.dll">
     </ComponentEntry>
   </Components>
     <Components Description="2015 parts">
     <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw12" SeriesMax="Nw13" />
-    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v12/GroupClashes.dll">
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v12/GroupClashes.BM42.dll">
     </ComponentEntry>
   </Components>
 </ApplicationPackage>

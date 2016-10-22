@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RibbonControl
+    x:Uid="ADNRibbonDemo" xmlns="clr-namespace:Autodesk.Windows;assembly=AdWindows"
+    xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:adwi="clr-namespace:Autodesk.Internal.Windows;assembly=AdWindows"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Autodesk.Navisworks.Gui.Roamer.AIRLook;assembly=navisworks.gui.roamer">
+    <!-- END STANDARD SECTION DO NOT EDIT -->
+
+    <RibbonTab Id="ID_GroupClashesTab" KeyTip="T1">
+        <RibbonPanel x:Uid="RibbonPane1_1">
+            <RibbonPanelSource x:Uid="RibbonPanelSource_RibbonPanel_1" KeyTip="C1" Title="Group Clashes">
+
+                <local:NWRibbonButton x:Uid="Button_1" Id="ID_GroupClashesButton"
+                                    Size="Large"
+                                    KeyTip="B1"
+                                    ShowText="True"   
+                                    Text="Group Clashes"
+                                    Orientation="Vertical"/>
+
+            </RibbonPanelSource>
+        </RibbonPanel>
+
+    </RibbonTab>
+
+</RibbonControl>

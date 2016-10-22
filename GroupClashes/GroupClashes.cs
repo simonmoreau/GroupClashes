@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.Navisworks.Api.Clash;
 using Autodesk.Navisworks.Api.Plugins;
-using Autodesk.Navisworks.Api;
-using Autodesk.Windows;
 
 namespace GroupClashes
 {
-    // AddIn plugin to show/hide the Group Clashes Addin 
-    [PluginAttribute("GroupClashes", "BM42", 
-        ToolTip = "Groups clashes according to the items involved", 
+    [Plugin("GroupClashes", "BM42", DisplayName = "Group Clashes")]
+    [Strings("GroupClashes.name")]
+    [RibbonLayout("GroupClashes.xaml")]
+    [RibbonTab("ID_GroupClashesTab",
         DisplayName = "Group Clashes")]
-    [AddInPluginAttribute(AddInLocation.AddIn,
-        Icon = "GroupClashesIcon_Small.ico",
-        LargeIcon = "GroupClashesIcon_Large.ico", 
-        LoadForCanExecute = true)]
+    [Command("ID_GroupClashesButton",
+             Icon = "GroupClashesIcon_Small.ico", LargeIcon = "GroupClashesIcon_Large.ico",
+             DisplayName = "Group Clashes")]
 
-    class GroupClashes : AddInPlugin
+    class RibbonHandler : CommandHandlerPlugin
     {
-        //private GroupClashesInterface groupClashesInterface;
+        public RibbonHandler()
+        {
+            m_toShowTab = false; // to show tab or not
+            m_toEnableButton = false; // to enable button or not
+        }
 
-        public override int Execute(params string[] parameters)
+        public override int ExecuteCommand(string commandId, params string[] parameters)
         {
             if (Autodesk.Navisworks.Api.Application.IsAutomated)
             {
@@ -32,7 +35,7 @@ namespace GroupClashes
             }
 
             //Find the plugin
-            PluginRecord pr = Application.Plugins.FindPlugin("GroupClashes.GroupClashesPane.BM42");
+            PluginRecord pr = Autodesk.Navisworks.Api.Application.Plugins.FindPlugin("GroupClashes.GroupClashesPane.BM42");
 
             if (pr != null && pr is DockPanePluginRecord && pr.IsEnabled)
             {
@@ -54,17 +57,31 @@ namespace GroupClashes
             return 0;
         }
 
-        protected override void OnLoaded()
+        public override CommandState CanExecuteCommand(String commandId)
         {
-            //Debug.WriteLine("Loaded");
+            CommandState state = new CommandState();
+            state.IsVisible = true;
+            state.IsEnabled = true;
+            state.IsChecked = true;
+
+            return state;
         }
 
-        public override CommandState CanExecute()
+        public override bool CanExecuteRibbonTab(string name)
         {
-            return new CommandState(true);
+            return true;
         }
 
-        
+        public override bool TryShowCommandHelp(string name)
+        {
+            FileInfo dllFileInfo = new FileInfo(Assembly.GetExecutingAssembly().Location);
+            string pathToHtmlFile = Path.Combine(dllFileInfo.Directory.FullName, @"Help\Help.html");
+            System.Diagnostics.Process.Start(pathToHtmlFile);
+            return true;
+        }
+
+        private bool m_toShowTab;
+        private bool m_toEnableButton;
     }
 }
 
