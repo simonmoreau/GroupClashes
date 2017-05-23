@@ -11,51 +11,86 @@ namespace GroupClashes
 {
     class GroupingFunctions
     {
-        public static void GroupClashes(ClashTest selectedClashTest, GroupingMode groupingMode, GroupingMode renamingMode)
+        public static void GroupClashes(ClashTest selectedClashTest, GroupingMode groupingMode, GroupingMode subgroupingMode, bool keepExistingGroups)
         {
             //Get existing clash result
-            IEnumerable<ClashResult> clashResults = GetIndividualClashResults(selectedClashTest);
+            List<ClashResult> clashResults = GetIndividualClashResults(selectedClashTest,keepExistingGroups).ToList();
             List<ClashResultGroup> clashResultGroups = new List<ClashResultGroup>();
 
+            //Create groups according to the first grouping mode
+            CreateGroup(ref clashResultGroups, groupingMode, clashResults,"");
+
+            //Optionnaly, create subgroups
+            if (subgroupingMode != GroupingMode.None)
+            {
+                CreateSubGroups(ref clashResultGroups, subgroupingMode);
+            }
+
+            //Remove groups with only one clash
+            List<ClashResult> ungroupedClashResults = RemoveOneClashGroup(ref clashResultGroups);
+
+            //Backup the existing group, if necessary
+            if (keepExistingGroups) clashResultGroups.AddRange(BackupExistingClashGroups(selectedClashTest));
+
+            //Process these groups and clashes into the clash test
+            ProcessClashGroup(clashResultGroups, ungroupedClashResults, selectedClashTest);
+        }
+
+        private static void CreateGroup(ref List<ClashResultGroup> clashResultGroups, GroupingMode groupingMode, List<ClashResult> clashResults, string initialName)
+        {
             //group all clashes
             switch (groupingMode)
             {
                 case GroupingMode.None:
                     return;
                 case GroupingMode.Level:
-                    clashResultGroups = GroupByLevel(clashResults.ToList());
+                    clashResultGroups = GroupByLevel(clashResults, initialName);
                     break;
                 case GroupingMode.GridIntersection:
-                    clashResultGroups = GroupByGridIntersection(clashResults.ToList());
+                    clashResultGroups = GroupByGridIntersection(clashResults, initialName);
                     break;
                 case GroupingMode.SelectionA:
                 case GroupingMode.SelectionB:
-                    clashResultGroups = GroupByElementOfAGivenSelection(clashResults.ToList(),groupingMode);
+                    clashResultGroups = GroupByElementOfAGivenSelection(clashResults, groupingMode, initialName);
                     break;
                 case GroupingMode.ApprovedBy:
                 case GroupingMode.AssignedTo:
                 case GroupingMode.Status:
-                    clashResultGroups = GroupByProperties(clashResults.ToList(), groupingMode);
+                    clashResultGroups = GroupByProperties(clashResults, groupingMode, initialName);
                     break;
             }
+        }
 
-            //Optionnaly, rename clash groups
-            if (renamingMode != GroupingMode.None)
+        private static void CreateSubGroups(ref List<ClashResultGroup> clashResultGroups, GroupingMode mode)
+        {
+            List<ClashResultGroup> clashResultSubGroups = new List<ClashResultGroup>();
+
+            foreach (ClashResultGroup group in clashResultGroups)
             {
-                RemaneGroupBySortingMode(ref clashResultGroups, renamingMode);
+
+                List<ClashResult> clashResults = new List<ClashResult>();
+
+                foreach (SavedItem item in group.Children)
+                {
+                    ClashResult clashResult = item as ClashResult;
+                    if (clashResult != null)
+                    {
+                        clashResults.Add(clashResult);
+                    }
+                }
+
+                List<ClashResultGroup> clashResultTempSubGroups = new List<ClashResultGroup>();
+                CreateGroup(ref clashResultTempSubGroups, mode, clashResults,group.DisplayName + "_");
+                clashResultSubGroups.AddRange(clashResultTempSubGroups);
             }
 
-            //Remove groups with only one clash
-            List<ClashResult> ungroupedClashResults = RemoveOneClashGroup(ref clashResultGroups);
-
-            //Process these groups and clashes into the clash test
-            ProcessClashGroup(clashResultGroups, ungroupedClashResults, selectedClashTest);
+            clashResultGroups = clashResultSubGroups;
         }
 
         public static void UnGroupClashes(ClashTest selectedClashTest)
         {
             List<ClashResultGroup> groups = new List<ClashResultGroup>();
-            List<ClashResult> results = GetIndividualClashResults(selectedClashTest).ToList();
+            List<ClashResult> results = GetIndividualClashResults(selectedClashTest,false).ToList();
             List<ClashResult> copiedResult = new List<ClashResult>();
 
             foreach (ClashResult result in results)
@@ -69,99 +104,169 @@ namespace GroupClashes
         }
 
         #region grouping functions
-        private static List<ClashResultGroup> GroupByLevel(List<ClashResult> results)
+        private static List<ClashResultGroup> GroupByLevel(List<ClashResult> results, string initialName)
         {
-            //I already check if it exists
+            //I already checked if it exists
             GridSystem gridSystem = Application.MainDocument.Grids.ActiveSystem;
             Dictionary<GridLevel, ClashResultGroup> groups = new Dictionary<GridLevel, ClashResultGroup>();
             ClashResultGroup currentGroup;
+
+            //Create a group for the null GridIntersection
+            ClashResultGroup nullGridGroup = new ClashResultGroup();
+            nullGridGroup.DisplayName = initialName + "No Level";
 
             foreach (ClashResult result in results)
             {
                 //Cannot add original result to new clash test, so I create a copy
                 ClashResult copiedResult = (ClashResult)result.CreateCopy();
-                GridLevel closestLevel = gridSystem.ClosestIntersection(copiedResult.Center).Level;
-
-                if (!groups.TryGetValue(closestLevel, out currentGroup))
+                
+                if (gridSystem.ClosestIntersection(copiedResult.Center) != null)
                 {
-                    currentGroup = new ClashResultGroup();
-                    string displayName = closestLevel.DisplayName;
-                    if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Level"; }
-                    currentGroup.DisplayName = displayName;
-                    groups.Add(closestLevel, currentGroup);
+                    GridLevel closestLevel = gridSystem.ClosestIntersection(copiedResult.Center).Level;
+
+                    if (!groups.TryGetValue(closestLevel, out currentGroup))
+                    {
+                        currentGroup = new ClashResultGroup();
+                        string displayName = closestLevel.DisplayName;
+                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Level"; }
+                        currentGroup.DisplayName = initialName + displayName;
+                        groups.Add(closestLevel, currentGroup);
+                    }
+                    currentGroup.Children.Add(copiedResult);
                 }
-                currentGroup.Children.Add(copiedResult);
+                else
+                {
+                    nullGridGroup.Children.Add(copiedResult);
+                }
             }
 
-            IOrderedEnumerable<KeyValuePair<GridLevel,ClashResultGroup>> list = groups.OrderBy(key => key.Key.Elevation);
+            IOrderedEnumerable<KeyValuePair<GridLevel, ClashResultGroup>> list = groups.OrderBy(key => key.Key.Elevation);
             groups = list.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
-            return groups.Values.ToList();
+
+            List<ClashResultGroup> groupsByLevel = groups.Values.ToList();
+            if (nullGridGroup.Children.Count != 0) groupsByLevel.Add(nullGridGroup);
+
+            return groupsByLevel;
         }
 
-        private static List<ClashResultGroup> GroupByGridIntersection(List<ClashResult> results)
+        private static List<ClashResultGroup> GroupByGridIntersection(List<ClashResult> results, string initialName)
         {
             //I already check if it exists
             GridSystem gridSystem = Application.MainDocument.Grids.ActiveSystem;
             Dictionary<GridIntersection, ClashResultGroup> groups = new Dictionary<GridIntersection, ClashResultGroup>();
             ClashResultGroup currentGroup;
 
+            //Create a group for the null GridIntersection
+            ClashResultGroup nullGridGroup = new ClashResultGroup();
+            nullGridGroup.DisplayName = initialName + "No Grid intersection";
+
             foreach (ClashResult result in results)
             {
                 //Cannot add original result to new clash test, so I create a copy
                 ClashResult copiedResult = (ClashResult)result.CreateCopy();
-                GridIntersection closestIntersection = gridSystem.ClosestIntersection(copiedResult.Center);
 
-                if (!groups.TryGetValue(closestIntersection, out currentGroup))
+                if (gridSystem.ClosestIntersection(copiedResult.Center) != null)
                 {
-                    currentGroup = new ClashResultGroup();
-                    string displayName = closestIntersection.DisplayName;
-                    if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Intersection"; }
-                    currentGroup.DisplayName = displayName;
-                    groups.Add(closestIntersection, currentGroup);
-                }
-                currentGroup.Children.Add(copiedResult);
-            }
+                    GridIntersection closestGridIntersection = gridSystem.ClosestIntersection(copiedResult.Center);
 
+                    if (!groups.TryGetValue(closestGridIntersection, out currentGroup))
+                    {
+                        currentGroup = new ClashResultGroup();
+                        string displayName = closestGridIntersection.DisplayName;
+                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Grid Intersection"; }
+                        currentGroup.DisplayName = initialName + displayName;
+                        groups.Add(closestGridIntersection, currentGroup);
+                    }
+                    currentGroup.Children.Add(copiedResult);
+                }
+                else
+                {
+                    nullGridGroup.Children.Add(copiedResult);
+                }
+            }
+           
             IOrderedEnumerable<KeyValuePair<GridIntersection, ClashResultGroup>> list = groups.OrderBy(key => key.Key.Position.X).OrderBy(key => key.Key.Level.Elevation);
             groups = list.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
-            return groups.Values.ToList();
+
+            List<ClashResultGroup> groupsByGridIntersection = groups.Values.ToList();
+            if (nullGridGroup.Children.Count != 0) groupsByGridIntersection.Add(nullGridGroup);
+
+            return groupsByGridIntersection;
         }
 
-        private static List<ClashResultGroup> GroupByElementOfAGivenSelection(List<ClashResult> results,GroupingMode mode)
+        private static List<ClashResultGroup> GroupByElementOfAGivenSelection(List<ClashResult> results, GroupingMode mode, string initialName)
         {
             Dictionary<ModelItem, ClashResultGroup> groups = new Dictionary<ModelItem, ClashResultGroup>();
             ClashResultGroup currentGroup;
+            List<ClashResultGroup> emptyClashResultGroups = new List<ClashResultGroup>();
 
             foreach (ClashResult result in results)
             {
+
                 //Cannot add original result to new clash test, so I create a copy
                 ClashResult copiedResult = (ClashResult)result.CreateCopy();
                 ModelItem modelItem = null;
 
                 if (mode == GroupingMode.SelectionA)
                 {
-                    modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem1);
+                    if (copiedResult.CompositeItem1 != null)
+                    {
+                        modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem1);
+                    }
+                    else if (copiedResult.CompositeItem2 != null)
+                    {
+                        modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem2);
+                    }
                 }
                 else if (mode == GroupingMode.SelectionB)
                 {
-                    modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem2);
+                    if (copiedResult.CompositeItem2 != null)
+                    {
+                        modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem2);
+                    }
+                    else if (copiedResult.CompositeItem1 != null)
+                    {
+                        modelItem = GetSignificantAncestorOrSelf(copiedResult.CompositeItem1);
+                    }
                 }
 
-                if (!groups.TryGetValue(modelItem, out currentGroup))
+                string displayName = "Empty clash";
+                if (modelItem != null)
                 {
-                    currentGroup = new ClashResultGroup();
-                    string displayName = modelItem.DisplayName;
-                    if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Parent"; }
-                    currentGroup.DisplayName = displayName;
-                    groups.Add(modelItem, currentGroup);
+                    displayName = modelItem.DisplayName;
+                    //Create a group
+                    if (!groups.TryGetValue(modelItem, out currentGroup))
+                    {
+                        currentGroup = new ClashResultGroup();
+                        if (string.IsNullOrEmpty(displayName)){ displayName = modelItem.Parent.DisplayName; }
+                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Parent"; }
+                        currentGroup.DisplayName = initialName + displayName;
+                        groups.Add(modelItem, currentGroup);
+                    }
+
+                    //Add to the group
+                    currentGroup.Children.Add(copiedResult);
                 }
-                currentGroup.Children.Add(copiedResult);
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("test");
+                    ClashResultGroup oneClashResultGroup = new ClashResultGroup();
+                    oneClashResultGroup.DisplayName = "Empty clash";
+                    oneClashResultGroup.Children.Add(copiedResult);
+                    emptyClashResultGroups.Add(oneClashResultGroup);
+                }
+
+
+
+
             }
 
-            return groups.Values.ToList();
+            List<ClashResultGroup> allGroups = groups.Values.ToList();
+            allGroups.AddRange(emptyClashResultGroups);
+            return allGroups;
         }
 
-        private static List<ClashResultGroup> GroupByProperties(List<ClashResult> results, GroupingMode mode)
+        private static List<ClashResultGroup> GroupByProperties(List<ClashResult> results, GroupingMode mode, string initialName)
         {
             Dictionary<string, ClashResultGroup> groups = new Dictionary<string, ClashResultGroup>();
             ClashResultGroup currentGroup;
@@ -190,7 +295,7 @@ namespace GroupClashes
                 if (!groups.TryGetValue(clashProperty, out currentGroup))
                 {
                     currentGroup = new ClashResultGroup();
-                    currentGroup.DisplayName = clashProperty;
+                    currentGroup.DisplayName = initialName + clashProperty;
                     groups.Add(clashProperty, currentGroup);
                 }
                 currentGroup.Children.Add(copiedResult);
@@ -198,56 +303,6 @@ namespace GroupClashes
 
             return groups.Values.ToList();
         }
-
-        private static void RemaneGroupBySortingMode(ref List<ClashResultGroup> clashResultGroups, GroupingMode mode)
-        {
-            GridSystem gridSystem = Application.MainDocument.Grids.ActiveSystem;
-
-            foreach (ClashResultGroup clashResultGroup in clashResultGroups)
-            {
-                string displayName = "";
-                switch (mode)
-                {
-                    case GroupingMode.None:
-                    case GroupingMode.SelectionA:
-                    case GroupingMode.SelectionB:
-                        return;
-                    case GroupingMode.Level:
-                        GridLevel closestLevel = gridSystem.ClosestIntersection(clashResultGroup.Center).Level;
-                        displayName = closestLevel.DisplayName;
-                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Level"; }
-                        clashResultGroup.DisplayName = displayName + "_" + clashResultGroup.DisplayName;
-                        break;
-                    case GroupingMode.GridIntersection:
-                        GridIntersection closestIntersection = gridSystem.ClosestIntersection(clashResultGroup.Center);
-                        displayName = closestIntersection.DisplayName;
-                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Intersection"; }
-                        clashResultGroup.DisplayName = displayName + "_" + clashResultGroup.DisplayName;
-                        break;
-                    case GroupingMode.ApprovedBy:
-                        string approvedByValue = "N/A";
-                        if (!String.IsNullOrEmpty(clashResultGroup.ApprovedBy))
-                        {
-                            approvedByValue = clashResultGroup.ApprovedBy;
-                        }
-                        clashResultGroup.DisplayName = approvedByValue + "_" + clashResultGroup.DisplayName;
-                        break;
-                    case GroupingMode.AssignedTo:
-                        string assignedToValue = "N/A";
-                        if (!String.IsNullOrEmpty(clashResultGroup.AssignedTo))
-                        {
-                            assignedToValue = clashResultGroup.ApprovedBy;
-                        }
-                        clashResultGroup.DisplayName = assignedToValue + "_" + clashResultGroup.DisplayName;
-                        break;
-                    case GroupingMode.Status:
-                        clashResultGroup.DisplayName = clashResultGroup.Status.ToString() + "_" + clashResultGroup.DisplayName;
-                        break;
-                }
-            }
-        }
-
-        
 
         #endregion
 
@@ -307,19 +362,33 @@ namespace GroupClashes
             return ungroupedClashResults;
         }
 
-        private static IEnumerable<ClashResult> GetIndividualClashResults(ClashTest clashTest)
+        private static IEnumerable<ClashResult> GetIndividualClashResults(ClashTest clashTest, bool keepExistingGroup)
         {
             for (var i = 0; i < clashTest.Children.Count; i++)
             {
                 if (clashTest.Children[i].IsGroup)
                 {
-                    IEnumerable<ClashResult> GroupResults = GetGroupResults((ClashResultGroup)clashTest.Children[i]);
-                    foreach (ClashResult clashResult in GroupResults)
+                    if (!keepExistingGroup)
                     {
-                        yield return clashResult;
+                        IEnumerable<ClashResult> GroupResults = GetGroupResults((ClashResultGroup)clashTest.Children[i]);
+                        foreach (ClashResult clashResult in GroupResults)
+                        {
+                            yield return clashResult;
+                        }
                     }
                 }
                 else yield return (ClashResult)clashTest.Children[i];
+            }
+        }
+
+        private static IEnumerable<ClashResultGroup> BackupExistingClashGroups(ClashTest clashTest)
+        {
+            for (var i = 0; i < clashTest.Children.Count; i++)
+            {
+                if (clashTest.Children[i].IsGroup)
+                {
+                    yield return (ClashResultGroup)clashTest.Children[i].CreateCopy();
+                }
             }
         }
 
@@ -331,18 +400,19 @@ namespace GroupClashes
             }
         }
 
-        private static ModelItem GetSignificantAncestorOrSelf(ModelItem Item)
+        private static ModelItem GetSignificantAncestorOrSelf(ModelItem item)
         {
-            ModelItem OriginalItem = Item;
-            ModelItem CurrentComposite = null;
+            ModelItem originalItem = item;
+            ModelItem currentComposite = null;
 
             //Get last composite item.
-            while (Item.Parent != null)
+            while (item.Parent != null)
             {
-                Item = Item.Parent;
-                if (Item.IsComposite) CurrentComposite = Item;
+                item = item.Parent;
+                if (item.IsComposite) currentComposite = item;
             }
-            return CurrentComposite ?? OriginalItem;
+
+            return currentComposite ?? originalItem;
         }
         #endregion
 
@@ -367,4 +437,5 @@ namespace GroupClashes
         [Description("Status")]
         Status
     }
+
 }

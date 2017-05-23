@@ -21,6 +21,9 @@ namespace GroupClashes
 
     class RibbonHandler : CommandHandlerPlugin
     {
+        private bool m_toShowTab;
+        private bool m_toEnableButton;
+
         public RibbonHandler()
         {
             m_toShowTab = false; // to show tab or not
@@ -80,8 +83,7 @@ namespace GroupClashes
             return true;
         }
 
-        private bool m_toShowTab;
-        private bool m_toEnableButton;
+
     }
 }
 

@@ -64,6 +64,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" x:Name="clashTestGroupBox" Header="Clash Test">
             <Grid Margin="5">
@@ -75,7 +76,7 @@
                     <RowDefinition Height="70" />
                 </Grid.RowDefinitions>
                 <ListBox Grid.Row="0" x:Name="ClashTestListBox" 
-                         ItemsSource="{Binding Path=ClashTests}">
+                         ItemsSource="{Binding Path=ClashTests}" SelectionMode="Extended">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="groupClashes:CustomClashTest">
                             <Label Content="{Binding DisplayName}"/>
@@ -104,6 +105,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Content="Group by : "/>
                 <ComboBox Grid.Column="1" Grid.Row="0" Name="comboBoxGroupBy"
@@ -115,7 +117,11 @@
                           ItemsSource="{Binding Path=GroupThenList}"/>
             </Grid>
         </GroupBox>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="5,0,0,0">
+            <CheckBox Name="keepExistingGroupsCheckBox" IsChecked="False" VerticalAlignment="Center"/>
+            <Label Content="Keep existing groups"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
             <!--<ProgressBar></ProgressBar>-->
             <Button Content="Group" IsDefault="True" Name="Group_Button"
                     Click="Group_Button_Click"

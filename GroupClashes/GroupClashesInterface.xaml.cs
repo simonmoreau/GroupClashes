@@ -41,63 +41,82 @@ namespace GroupClashes
             GroupThenList = new ObservableCollection<GroupingMode>();
 
             RegisterChanges();
-            
+
             this.DataContext = this;
         }
 
         private void Group_Button_Click(object sender, WIN.RoutedEventArgs e)
         {
-            if (ClashTestListBox.SelectedItem != null)
+            if (ClashTestListBox.SelectedItems.Count != 0)
             {
-                CustomClashTest selectedClashTest = (CustomClashTest)ClashTestListBox.SelectedItem;
-                ClashTest clashTest = selectedClashTest.ClashTest;
-                
-                if (clashTest.Children.Count != 0)
+                //Unsubscribe temporarly
+                UnRegisterChanges();
+
+                foreach (object selectedItem in ClashTestListBox.SelectedItems)
                 {
-                    if (comboBoxGroupBy.SelectedItem != null
-    || (GroupingMode)comboBoxGroupBy.SelectedItem == GroupingMode.None)
+                    CustomClashTest selectedClashTest = (CustomClashTest)selectedItem;
+                    ClashTest clashTest = selectedClashTest.ClashTest;
+
+                    if (clashTest.Children.Count != 0)
                     {
-                        //Unsubscribe temporarly
-                        UnRegisterChanges();
+                        //Some selection check
+                        if (comboBoxGroupBy.SelectedItem == null) comboBoxGroupBy.SelectedItem = GroupingMode.None;
+                        if (comboBoxThenBy.SelectedItem == null) comboBoxThenBy.SelectedItem = GroupingMode.None;
 
-                        if (comboBoxThenBy.SelectedItem == null
-                            || (GroupingMode)comboBoxThenBy.SelectedItem == GroupingMode.None)
+                        if ((GroupingMode)comboBoxThenBy.SelectedItem != GroupingMode.None
+                            || (GroupingMode)comboBoxGroupBy.SelectedItem != GroupingMode.None)
                         {
-                            GroupingMode mode = (GroupingMode)comboBoxGroupBy.SelectedItem;
-                            GroupingFunctions.GroupClashes(clashTest, mode, GroupingMode.None);
-                        }
-                        else
-                        {
-                            GroupingMode byMode = (GroupingMode)comboBoxGroupBy.SelectedItem;
-                            GroupingMode thenByMode = (GroupingMode)comboBoxThenBy.SelectedItem;
-                            GroupingFunctions.GroupClashes(clashTest, thenByMode, byMode);
+
+                            if ((GroupingMode)comboBoxThenBy.SelectedItem == GroupingMode.None
+                                && (GroupingMode)comboBoxGroupBy.SelectedItem != GroupingMode.None)
+                            {
+                                GroupingMode mode = (GroupingMode)comboBoxGroupBy.SelectedItem;
+                                GroupingFunctions.GroupClashes(clashTest, mode, GroupingMode.None, (bool)keepExistingGroupsCheckBox.IsChecked);
+                            }
+                            else if ((GroupingMode)comboBoxGroupBy.SelectedItem == GroupingMode.None
+                                && (GroupingMode)comboBoxThenBy.SelectedItem != GroupingMode.None)
+                            {
+                                GroupingMode mode = (GroupingMode)comboBoxThenBy.SelectedItem;
+                                GroupingFunctions.GroupClashes(clashTest, mode, GroupingMode.None, (bool)keepExistingGroupsCheckBox.IsChecked);
+                            }
+                            else
+                            {
+                                GroupingMode byMode = (GroupingMode)comboBoxGroupBy.SelectedItem;
+                                GroupingMode thenByMode = (GroupingMode)comboBoxThenBy.SelectedItem;
+                                GroupingFunctions.GroupClashes(clashTest, byMode, thenByMode, (bool)keepExistingGroupsCheckBox.IsChecked);
+                            }
                         }
 
-                        //Resubscribe
-                        RegisterChanges();
                     }
                 }
+
+                //Resubscribe
+                RegisterChanges();
             }
 
         }
 
         private void Ungroup_Button_Click(object sender, WIN.RoutedEventArgs e)
         {
-            if (ClashTestListBox.SelectedItem != null)
+            if (ClashTestListBox.SelectedItems.Count != 0)
             {
-                CustomClashTest selectedClashTest = (CustomClashTest)ClashTestListBox.SelectedItem;
-                ClashTest clashTest = selectedClashTest.ClashTest;
+                //Unsubscribe temporarly
+                UnRegisterChanges();
 
-                if (clashTest.Children.Count != 0)
+                foreach (object selectedItem in ClashTestListBox.SelectedItems)
                 {
-                    //Unsubscribe temporarly
-                    UnRegisterChanges();
+                    CustomClashTest selectedClashTest = (CustomClashTest)selectedItem;
+                    ClashTest clashTest = selectedClashTest.ClashTest;
 
-                    GroupingFunctions.UnGroupClashes(clashTest);
-
-                    //Resubscribe
-                    RegisterChanges();
+                    if (clashTest.Children.Count != 0)
+                    {
+                        GroupingFunctions.UnGroupClashes(clashTest);
+                    }
                 }
+
+                //Resubscribe
+                RegisterChanges();
+
             }
         }
 
@@ -143,7 +162,7 @@ namespace GroupClashes
 
             foreach (SavedItem savedItem in dct.Tests)
             {
-                if (savedItem.GetType() == typeof (ClashTest))
+                if (savedItem.GetType() == typeof(ClashTest))
                 {
                     ClashTests.Add(new CustomClashTest(savedItem as ClashTest));
                 }
@@ -221,7 +240,21 @@ namespace GroupClashes
         private string GetSelectedItem(ClashSelection selection)
         {
             string result = "";
-            if (selection.Selection.GetSelectedItems().Count == 0)
+            if (selection.Selection.HasSelectionSources)
+            {
+                result = selection.Selection.SelectionSources.FirstOrDefault().ToString();
+                if (result.Contains("lcop_selection_set_tree\\"))
+                {
+                    result = result.Replace("lcop_selection_set_tree\\", "");
+                }
+
+                if (selection.Selection.SelectionSources.Count > 1)
+                {
+                    result = result + " (and other selection sets)";
+                }
+
+            }
+            else if (selection.Selection.GetSelectedItems().Count == 0)
             {
                 result = "No item have been selected.";
             }
