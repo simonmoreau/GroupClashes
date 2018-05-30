@@ -353,7 +353,7 @@ namespace GroupClashes
                 if (group.Children.Count == 1)
                 {
                     ClashResult result = (ClashResult)group.Children.FirstOrDefault();
-                    result.DisplayName = group.DisplayName;
+                    //result.DisplayName = group.DisplayName;
                     ungroupedClashResults.Add(result);
                     clashResultGroups.Remove(group);
                 }
