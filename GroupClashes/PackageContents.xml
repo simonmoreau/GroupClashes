@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <ApplicationPackage>
+  <Components Description="2020 parts">
+    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw17" SeriesMax="Nw17" />
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v17/GroupClashes.BM42.dll">
+    </ComponentEntry>
+  </Components>
+  <Components Description="2019 parts">
+    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw16" SeriesMax="Nw16" />
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v16/GroupClashes.BM42.dll">
+    </ComponentEntry>
+  </Components>
+  <Components Description="2018 parts">
+    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw15" SeriesMax="Nw15" />
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v15/GroupClashes.BM42.dll">
+    </ComponentEntry>
+  </Components>
   <Components Description="2017 parts">
     <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw14" SeriesMax="Nw14" />
     <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v14/GroupClashes.BM42.dll">
@@ -11,7 +25,7 @@
     <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v13/GroupClashes.BM42.dll">
     </ComponentEntry>
   </Components>
-    <Components Description="2015 parts">
+  <Components Description="2015 parts">
     <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw12" SeriesMax="Nw13" />
     <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v12/GroupClashes.BM42.dll">
     </ComponentEntry>

@@ -30,15 +30,115 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v17|AnyCPU'">
+    <OutputPath>bin\v17\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v16|AnyCPU'">
+    <OutputPath>bin\v16\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v15|AnyCPU'">
+    <OutputPath>bin\v15\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v14|AnyCPU'">
+    <OutputPath>bin\v14\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v13|AnyCPU'">
+    <OutputPath>bin\v13\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v12|AnyCPU'">
+    <OutputPath>bin\v12\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1294.5, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Release' OR '$(Configuration)' == 'v17'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Release' OR '$(Configuration)' == 'v17'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v16'">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2019\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1294.5, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v16'">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2019\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v15'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2018\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v15'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2018\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v14'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2017\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v14'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2017\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v13' OR '$(Configuration)' == 'v12'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2016\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v13' OR '$(Configuration)' == 'v12'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2016\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -116,13 +216,27 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\" rmdir /S /Q "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\"
-xcopy /Y "$(TargetPath)" "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\"
-mkdir "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\en-US
-copy /Y "$(ProjectDir)en-US\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\en-US\"
-xcopy /Y "$(ProjectDir)Images\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\Images\"
-xcopy /Y "$(ProjectDir)Help\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\Help\"
-xcopy /Y "$(ProjectDir)Help\Resources\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2019\Plugins\$(TargetName)\Help\Resources\"</PostBuildEvent>
+    <PostBuildEvent>set SolutionName=GroupClashes
+set SigntoolPath="C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x64\signtool.exe"
+call %25SigntoolPath%25 sign /sha1 3b428f7d77548f2f10a204bd551da1c3ede7c0e7 /d "%25SolutioName%25" /du "http://www.eai.fr" /t "http://timestamp.comodoca.com/authenticode" /fd sha256 "$(TargetPath)"
+
+if $(ConfigurationName) == Debug (
+    IF EXIST "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\" rmdir /S /Q "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\"
+    xcopy /Y "$(TargetPath)" "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\"
+    mkdir "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\en-US
+    copy /Y "$(ProjectDir)en-US\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\en-US\"
+    xcopy /Y "$(ProjectDir)Images\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\Images\"
+    xcopy /Y "$(ProjectDir)Help\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\Help\"
+    xcopy /Y "$(ProjectDir)Help\Resources\*.*" "C:\Program Files\Autodesk\Navisworks Manage 2020\Plugins\$(TargetName)\Help\Resources\"
+) ELSE (
+    set releaseFolder="G:\My Drive\05 - Travail\Revit Dev\GroupClashes\Releases\Current Release\GroupClashes.BM42.bundle"
+    IF EXIST %25releaseFolder%25 xcopy /Y "$(ProjectDir)PackageContents.xml" %25releaseFolder%25
+    IF EXIST %25releaseFolder%25"\Contents\$(Configuration)\" xcopy /Y "$(TargetPath)" %25releaseFolder%25"\Contents\$(Configuration)\"
+    IF EXIST %25releaseFolder%25"\Contents\$(Configuration)\" xcopy /Y "$(ProjectDir)en-US\*.*" %25releaseFolder%25"\Contents\$(Configuration)\en-US\"
+    IF EXIST %25releaseFolder%25"\Contents\$(Configuration)\" xcopy /Y "$(ProjectDir)Images\*.*" %25releaseFolder%25"\Contents\$(Configuration)\Images\"
+    IF EXIST %25releaseFolder%25"\Contents\$(Configuration)\" xcopy /Y "$(ProjectDir)Help\*.*" %25releaseFolder%25"\Contents\$(Configuration)\Help\"
+    IF EXIST %25releaseFolder%25"\Contents\$(Configuration)\" xcopy /Y "$(ProjectDir)Help\Resources\*.*" %25releaseFolder%25"\Contents\$(Configuration)\Help\Resources\"
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
