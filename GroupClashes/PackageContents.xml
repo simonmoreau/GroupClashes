@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApplicationPackage>
+  <Components Description="2021 parts">
+    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw18" SeriesMax="Nw18" />
+    <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v18/GroupClashes.BM42.dll">
+    </ComponentEntry>
+  </Components>
   <Components Description="2020 parts">
     <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw17" SeriesMax="Nw17" />
     <ComponentEntry AppType="ManagedPlugin" ModuleName="./Contents/v17/GroupClashes.BM42.dll">
