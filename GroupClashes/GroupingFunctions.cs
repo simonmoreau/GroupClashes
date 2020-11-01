@@ -53,6 +53,10 @@ namespace GroupClashes
                 case GroupingMode.SelectionB:
                     clashResultGroups = GroupByElementOfAGivenSelection(clashResults, groupingMode, initialName);
                     break;
+                case GroupingMode.ModelA:
+                case GroupingMode.ModelB:
+                    clashResultGroups = GroupByElementOfAGivenModel(clashResults, groupingMode, initialName);
+                    break;
                 case GroupingMode.ApprovedBy:
                 case GroupingMode.AssignedTo:
                 case GroupingMode.Status:
@@ -266,6 +270,75 @@ namespace GroupClashes
             return allGroups;
         }
 
+        private static List<ClashResultGroup> GroupByElementOfAGivenModel(List<ClashResult> results, GroupingMode mode, string initialName)
+        {
+            Dictionary<ModelItem, ClashResultGroup> groups = new Dictionary<ModelItem, ClashResultGroup>();
+            ClashResultGroup currentGroup;
+            List<ClashResultGroup> emptyClashResultGroups = new List<ClashResultGroup>();
+
+            foreach (ClashResult result in results)
+            {
+
+                //Cannot add original result to new clash test, so I create a copy
+                ClashResult copiedResult = (ClashResult)result.CreateCopy();
+                // ModelItem modelItem = null;
+                ModelItem rootModel = null;
+
+                if (mode == GroupingMode.ModelA)
+                {
+                    if (copiedResult.CompositeItem1 != null)
+                    {
+                        rootModel = GetFileAncestor(copiedResult.CompositeItem1);
+                    }
+                    else if (copiedResult.CompositeItem2 != null)
+                    {
+                        rootModel = GetFileAncestor(copiedResult.CompositeItem2);
+                    }
+                }
+                else if (mode == GroupingMode.ModelB)
+                {
+                    if (copiedResult.CompositeItem2 != null)
+                    {
+                        rootModel = GetFileAncestor(copiedResult.CompositeItem2);
+                    }
+                    else if (copiedResult.CompositeItem1 != null)
+                    {
+                        rootModel = GetFileAncestor(copiedResult.CompositeItem1);
+                    }
+                }
+
+                string displayName = "Empty clash";
+                if (rootModel != null)
+                {
+                    displayName = rootModel.DisplayName;
+                    //Create a group
+                    if (!groups.TryGetValue(rootModel, out currentGroup))
+                    {
+                        currentGroup = new ClashResultGroup();
+                        // if (string.IsNullOrEmpty(displayName)) { displayName = rootModel.Parent.DisplayName; }
+                        if (string.IsNullOrEmpty(displayName)) { displayName = "Unnamed Model"; }
+                        currentGroup.DisplayName = initialName + displayName;
+                        groups.Add(rootModel, currentGroup);
+                    }
+
+                    //Add to the group
+                    currentGroup.Children.Add(copiedResult);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("test");
+                    ClashResultGroup oneClashResultGroup = new ClashResultGroup();
+                    oneClashResultGroup.DisplayName = "Empty clash";
+                    oneClashResultGroup.Children.Add(copiedResult);
+                    emptyClashResultGroups.Add(oneClashResultGroup);
+                }
+            }
+
+            List<ClashResultGroup> allGroups = groups.Values.ToList();
+            allGroups.AddRange(emptyClashResultGroups);
+            return allGroups;
+        }
+
         private static List<ClashResultGroup> GroupByProperties(List<ClashResult> results, GroupingMode mode, string initialName)
         {
             Dictionary<string, ClashResultGroup> groups = new Dictionary<string, ClashResultGroup>();
@@ -414,6 +487,27 @@ namespace GroupClashes
 
             return currentComposite ?? originalItem;
         }
+
+        private static ModelItem GetFileAncestor(ModelItem item)
+        {
+            ModelItem originalItem = item;
+
+            ModelItem currentComposite = null;
+
+            //Get last composite item.
+            while (item.Parent != null)
+            {
+                item = item.Parent;
+                if (item.HasModel)
+                {
+                    currentComposite = item;
+                    break;
+                }
+            }
+
+            return currentComposite ?? originalItem;
+        }
+
         #endregion
 
     }
@@ -430,6 +524,10 @@ namespace GroupClashes
         SelectionA,
         [Description("Selection B")]
         SelectionB,
+        [Description("Model A")]
+        ModelA,
+        [Description("Model B")]
+        ModelB,
         [Description("Assigned To")]
         AssignedTo,
         [Description("Approved By")]

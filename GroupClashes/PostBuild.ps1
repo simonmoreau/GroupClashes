@@ -21,6 +21,7 @@ if ($Configuration -eq "Debug") {
     $releaseFolder="G:\My Drive\05 - Travail\Revit Dev\GroupClashes\Releases\Current Release\GroupClashes.BM42.bundle"
     IF (Test-Path $releaseFolder) { xcopy /Y ($ProjectDir + "PackageContents.xml") $releaseFolder }
     IF (Test-Path ($releaseFolder + "\Contents\" + $Configuration + "\")) { 
+        Get-ChildItem -Path ($releaseFolder + "\Contents\" + $Configuration + "\") -Recurse | Foreach-object {Remove-item -Recurse -path $_.FullName }
         xcopy /Y $TargetPath  ($releaseFolder + "\Contents\" + $Configuration + "\")
         xcopy /Y ($ProjectDir + "en-US\*.*")  ($releaseFolder + "\Contents\$Configuration\en-US\")
         xcopy /Y ($ProjectDir + "Images\*.*") ($releaseFolder + "\Contents\$Configuration\Images\") 
