@@ -79,6 +79,7 @@ namespace GroupClashes
         {
             FileInfo dllFileInfo = new FileInfo(Assembly.GetExecutingAssembly().Location);
             string pathToHtmlFile = Path.Combine(dllFileInfo.Directory.FullName, @"Help\Help.html");
+            string helpUrl = @"https://witty-river-01a861010.2.azurestaticapps.net/GroupClashes/GroupClashes.html";
             System.Diagnostics.Process.Start(pathToHtmlFile);
             return true;
         }

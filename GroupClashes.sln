@@ -7,35 +7,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupClashes", "GroupClashe
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-		v12|Any CPU = v12|Any CPU
-		v13|Any CPU = v13|Any CPU
-		v14|Any CPU = v14|Any CPU
-		v15|Any CPU = v15|Any CPU
-		v16|Any CPU = v16|Any CPU
-		v17|Any CPU = v17|Any CPU
-		v18|Any CPU = v18|Any CPU
+		2019Debug|Any CPU = 2019Debug|Any CPU
+		2019Release|Any CPU = 2019Release|Any CPU
+		2020Debug|Any CPU = 2020Debug|Any CPU
+		2020Release|Any CPU = 2020Release|Any CPU
+		2021Debug|Any CPU = 2021Debug|Any CPU
+		2021Release|Any CPU = 2021Release|Any CPU
+		2022Debug|Any CPU = 2022Debug|Any CPU
+		2022Release|Any CPU = 2022Release|Any CPU
+		2023Debug|Any CPU = 2023Debug|Any CPU
+		2023Release|Any CPU = 2023Release|Any CPU
+		2024Debug|Any CPU = 2024Debug|Any CPU
+		2024Release|Any CPU = 2024Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v12|Any CPU.ActiveCfg = v12|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v12|Any CPU.Build.0 = v12|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v13|Any CPU.ActiveCfg = v13|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v13|Any CPU.Build.0 = v13|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v14|Any CPU.ActiveCfg = v14|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v14|Any CPU.Build.0 = v14|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v15|Any CPU.ActiveCfg = v15|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v15|Any CPU.Build.0 = v15|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v16|Any CPU.ActiveCfg = v16|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v16|Any CPU.Build.0 = v16|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v17|Any CPU.ActiveCfg = v17|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v17|Any CPU.Build.0 = v17|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v18|Any CPU.ActiveCfg = v18|Any CPU
-		{3876FA5D-2B66-4859-A4CD-12F9020B4C29}.v18|Any CPU.Build.0 = v18|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

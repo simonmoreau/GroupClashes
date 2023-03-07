@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,138 +10,211 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GroupClashes</RootNamespace>
     <AssemblyName>GroupClashes.BM42</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2024Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2024Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Version2024</DefineConstants>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v18|AnyCPU'">
-    <OutputPath>bin\v18\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage Preview Release\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v17|AnyCPU'">
-    <OutputPath>bin\v17\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2024Release|AnyCPU' ">
+    <OutputPath>bin\2024Release\</OutputPath>
+    <DefineConstants>TRACE;Version2024</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage Preview Release\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v16|AnyCPU'">
-    <OutputPath>bin\v16\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2023Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2023Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Version2023</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2023\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2023Release|AnyCPU' ">
+    <OutputPath>bin\2023Release\</OutputPath>
+    <DefineConstants>TRACE;Version2023</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2023\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v15|AnyCPU'">
-    <OutputPath>bin\v15\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2022Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2022Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Version2022</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2022\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2022Release|AnyCPU' ">
+    <OutputPath>bin\2022Release\</OutputPath>
+    <DefineConstants>TRACE;Version2022</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2022\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v14|AnyCPU'">
-    <OutputPath>bin\v14\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2021Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2021Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Version2021</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2021\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2021Release|AnyCPU'">
+    <OutputPath>bin\2021Release\</OutputPath>
+    <DefineConstants>TRACE;Version2021</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2021\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v13|AnyCPU'">
-    <OutputPath>bin\v13\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2020Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2020Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Version2020</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2020\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2020Release|AnyCPU'">
+    <OutputPath>bin\2020Release\</OutputPath>
+    <DefineConstants>TRACE;Version2020</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2020\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'v12|AnyCPU'">
-    <OutputPath>bin\v12\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2019Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\2019Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Version2019</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2019\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2019Release|AnyCPU'">
+    <OutputPath>bin\2019Release\</OutputPath>
+    <DefineConstants>TRACE;Version2019</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2019\Roamer.exe</StartProgram>
+    <StartAction>Program</StartAction>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Release' OR '$(Configuration)' == 'v18'">
+    <!-- 2024 -->
+    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2023 -->
+    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2022 -->
+    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2022\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2022\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2021 -->
+    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2021\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'Debug' OR '$(Configuration)' == 'Release' OR '$(Configuration)' == 'v18'">
+    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2021\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v17'">
+    <!-- 2020 -->
+    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v17'">
+    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v16'">
+    <!-- 2019 -->
+    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2019\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v16'">
+    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2019\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v15' OR '$(Configuration)' == 'v14' OR '$(Configuration)' == 'v13' OR '$(Configuration)' == 'v12'">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2018\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'v15' OR '$(Configuration)' == 'v14' OR '$(Configuration)' == 'v13' OR '$(Configuration)' == 'v12'">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2018\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -214,7 +288,6 @@
     </None>
     <None Include="PostBuild.ps1" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set SolutionName=GroupClashes
