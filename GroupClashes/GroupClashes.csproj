@@ -148,69 +148,69 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- 2024 -->
-    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2023 -->
-    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Api">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Clash">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Clash.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2023 -->
+    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Api">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Clash">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- 2022 -->
-    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Api">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2022\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Clash">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2022\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- 2021 -->
-    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Api">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2021\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Clash">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2021\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- 2020 -->
-    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Api">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Clash">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- 2019 -->
-    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Api, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Api">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2019\Autodesk.Navisworks.Api.dll</HintPath>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Clash, Version=13.0.1240.52, Culture=neutral, PublicKeyToken=d85e58fa5af9b484, processorArchitecture=AMD64">
+    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Clash">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2019\Autodesk.Navisworks.Clash.dll</HintPath>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
