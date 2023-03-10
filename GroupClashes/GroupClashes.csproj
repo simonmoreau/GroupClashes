@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -260,13 +259,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Help\appicon.ico" />
-    <Content Include="Help\Help.html" />
-    <Content Include="Help\Resources\appstore-combined.min.css" />
-    <Content Include="Help\Resources\original_91ffa447-104a-44d6-97ff-ba8a2abc4394_.png" />
-    <Content Include="Help\Resources\original_a6f52492-7d62-4cc2-8c7b-2a37421b5f03_.png" />
-    <Content Include="Help\Resources\original_e950995e-f6f0-475c-9ff8-e1a1203d9679_.png" />
-    <Content Include="Help\Resources\resized_e40892e4-0990-444e-af36-1e1e2322008b_.png" />
     <Content Include="Images\GroupClashesIcon_Large.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -290,11 +282,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set SolutionName=GroupClashes
-set SigntoolPath="C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\signtool.exe"
-call %25SigntoolPath%25 sign /sha1 3b428f7d77548f2f10a204bd551da1c3ede7c0e7 /d "%25SolutioName%25" /du "http://www.eai.fr" /t "http://timestamp.comodoca.com/authenticode" /fd sha256 "$(TargetPath)"
-
-powershell -ExecutionPolicy Unrestricted $(ProjectDir)PostBuild.ps1 -Configuration $(Configuration) -TargetName $(TargetName) -ProjectDir $(ProjectDir) -TargetPath $(TargetPath)</PostBuildEvent>
+    <PostBuildEvent>powershell -ExecutionPolicy Unrestricted $(ProjectDir)PostBuild.ps1 -Configuration $(Configuration) -TargetName $(TargetName) -ProjectDir $(ProjectDir) -TargetPath $(TargetPath) -TargetDir $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,32 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="AutoCAD" Name="Group Clashes" Description="Automatically sort and group clashes." AppVersion="1.1.4" FriendlyVersion="1.1.4" ProductType="Application" HelpFile="./Contents/v17/Help/Help.html" SupportedLocales="Enu" AppNameSpace="appstore.exchange.autodesk.com" OnlineDocumentation="www.bim42.com" Author="BIM 42" ProductCode="{2AC1C3D6-EEA8-416E-B637-A6087682ABC5}" UpgradeCode="{46517CE0-25D9-4942-AA7C-5EED19721D74}" Icon="./Contents/v17/Help/appicon.ico">
-  <CompanyDetails Name="BIM 42" Url="www.bim42.com" Email="simon@bim42.com" Phone=" " />
-  <Components Description="2021 parts">
-    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw18" SeriesMax="Nw18" />
-    <ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/v18/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
-  </Components>
-  <Components Description="2020 parts">
-    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw17" SeriesMax="Nw17" />
-    <ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/v17/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
-  </Components>
-  <Components Description="2019 parts">
-    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw16" SeriesMax="Nw16" />
-    <ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/v16/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
-  </Components>
-  <Components Description="2018 parts">
-    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw15" SeriesMax="Nw15" />
-    <ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/v15/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
-  </Components>
-  <Components Description="2017 parts">
-    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw14" SeriesMax="Nw14" />
-    <ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/v14/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
-  </Components>
-  <Components Description="2016 parts">
-    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw13" SeriesMax="Nw13" />
-    <ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/v13/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
-  </Components>
-  <Components Description="2015 parts">
-    <RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw12" SeriesMax="Nw12" />
-    <ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/v12/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
-  </Components>
+<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="AutoCAD" Name="Group Clashes" Description="Automatically sort and group clashes." AppVersion="1.1.4" FriendlyVersion="1.1.4" ProductType="Application" HelpFile="./Contents/2025/Help/Help.html" SupportedLocales="Enu" AppNameSpace="appstore.exchange.autodesk.com" OnlineDocumentation="www.bim42.com" Author="BIM 42" ProductCode="{2AC1C3D6-EEA8-416E-B637-A6087682ABC5}" UpgradeCode="{46517CE0-25D9-4942-AA7C-5EED19721D74}" Icon="./Contents/v17/Help/appicon.ico">
+	<CompanyDetails Name="BIM 42" Url="www.bim42.com" Email="simon@bim42.com" Phone=" " />
+	<Components Description="2024 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw21" SeriesMax="Nw21" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2024/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2023 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw20" SeriesMax="Nw20" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2023/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2022 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw19" SeriesMax="Nw19" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2022/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2021 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw18" SeriesMax="Nw18" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2021/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2020 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw17" SeriesMax="Nw17" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2020/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2019 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw16" SeriesMax="Nw16" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2019/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2018 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw15" SeriesMax="Nw15" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2018/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2017 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw14" SeriesMax="Nw14" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2017/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2016 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw13" SeriesMax="Nw13" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2016/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
+	<Components Description="2015 parts">
+		<RuntimeRequirements OS="Win64" Platform="NAVMAN" SeriesMin="Nw12" SeriesMax="Nw12" />
+		<ComponentEntry AppName="Group Clashes" AppType="ManagedPlugin" Version="1.1.4" ModuleName="./Contents/2015/GroupClashes.BM42.dll" AppDescription="Group Clashes" />
+	</Components>
 </ApplicationPackage>

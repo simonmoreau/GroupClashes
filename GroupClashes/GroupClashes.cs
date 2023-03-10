@@ -77,10 +77,10 @@ namespace GroupClashes
 
         public override bool TryShowCommandHelp(string name)
         {
-            FileInfo dllFileInfo = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            string pathToHtmlFile = Path.Combine(dllFileInfo.Directory.FullName, @"Help\Help.html");
+            //FileInfo dllFileInfo = new FileInfo(Assembly.GetExecutingAssembly().Location);
+            //string pathToHtmlFile = Path.Combine(dllFileInfo.Directory.FullName, @"Help\Help.html");
             string helpUrl = @"https://witty-river-01a861010.2.azurestaticapps.net/GroupClashes/GroupClashes.html";
-            System.Diagnostics.Process.Start(pathToHtmlFile);
+            System.Diagnostics.Process.Start(helpUrl);
             return true;
         }
 

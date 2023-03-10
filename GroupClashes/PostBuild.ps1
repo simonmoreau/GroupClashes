@@ -1,31 +1,60 @@
-﻿param ($Configuration, $TargetName, $ProjectDir, $TargetPath)
+﻿param ($Configuration, $TargetName, $ProjectDir, $TargetPath, $TargetDir)
 write-host $Configuration
 write-host $TargetName
 write-host $ProjectDir
 write-host $TargetPath
+write-host $TargetDir
 
+# sign the dll
+$thumbPrint = "e729567d4e9be8ffca04179e3375b7669bccf272"
+$cert=Get-ChildItem -Path Cert:\CurrentUser\My -CodeSigningCert | Where { $_.Thumbprint -eq $thumbPrint}
 
-## powershell -ExecutionPolicy Unrestricted $(ProjectDir)PostBuild.ps1 -Configuration $(Configuration) -TargetName $(TargetName) -ProjectDir $(ProjectDir) -TargetPath $(TargetPath)
+Set-AuthenticodeSignature -FilePath $TargetPath -Certificate $cert -IncludeChain All -TimestampServer "http://timestamp.comodoca.com/authenticode"
 
-if ($Configuration -eq "Debug") {
-    IF (Test-Path "C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\$TargetName\") {
-      Remove-Item ("C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\" + $TargetName + "\") -Recurse
+function CopyToFolder($revitVersion, $addinFolder) {
+
+    if (Test-Path $addinFolder) {
+        try {
+            # Remove previous versions
+            Get-ChildItem -Path $addinFolder | Remove-Item -Recurse
+            
+            # Copy the addin file
+            Write-Host "copy all files" + ($TargetDir) + $addinFolder
+            xcopy ($TargetDir) ($addinFolder) /s /e /y
+        }
+        catch {
+            Write-Host "An error occurred:"
+            Write-Host $_
+        }
     }
-    xcopy /Y "$TargetPath" ("C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\" + $TargetName + "\")
-    ## mkdir ("C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\" + $TargetName + "\en-US")
-    xcopy /Y ($ProjectDir + "en-US\*.*") ("C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\" + $TargetName + "\en-US\")
-    xcopy /Y ($ProjectDir + "Images\*.*") ("C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\" + $TargetName + "\Images\")
-    xcopy /Y ($ProjectDir + "Help\*.*") ("C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\" + $TargetName + "\Help\")
-    xcopy /Y ($ProjectDir + "Help\Resources\*.*") ("C:\Program Files\Autodesk\Navisworks Manage 2021\Plugins\" + $TargetName + "\Help\Resources\")
-} else {
-    $releaseFolder="G:\My Drive\05 - Travail\Revit Dev\GroupClashes\Releases\Current Release\GroupClashes.BM42.bundle"
-    IF (Test-Path $releaseFolder) { xcopy /Y ($ProjectDir + "PackageContents.xml") $releaseFolder }
-    IF (Test-Path ($releaseFolder + "\Contents\" + $Configuration + "\")) { 
-        Get-ChildItem -Path ($releaseFolder + "\Contents\" + $Configuration + "\") -Recurse | Foreach-object {Remove-item -Recurse -path $_.FullName }
-        xcopy /Y $TargetPath  ($releaseFolder + "\Contents\" + $Configuration + "\")
-        xcopy /Y ($ProjectDir + "en-US\*.*")  ($releaseFolder + "\Contents\$Configuration\en-US\")
-        xcopy /Y ($ProjectDir + "Images\*.*") ($releaseFolder + "\Contents\$Configuration\Images\") 
-        xcopy /Y ($ProjectDir + "Help\*.*") ($releaseFolder + "\Contents\$Configuration\Help\")
-        xcopy /Y ($ProjectDir + "Help\Resources\*.*") ($releaseFolder + "\Contents\$Configuration\Help\Resources\") 
-    }
+}
+
+
+$revitVersion = $Configuration.replace('Debug','').replace('Release','')
+
+# Copy to Addin folder for debug
+$addinMainFolder = ($env:APPDATA + "\Autodesk\ApplicationPlugins\GroupClashes.BM42.bundle\")
+xcopy /Y ($ProjectDir + "PackageContents.xml") $addinMainFolder
+$addinFolder = ($addinMainFolder + "Contents\" + $revitVersion + "\")
+Write-Host "addin folder" + $addinFolder
+CopyToFolder $revitVersion $addinFolder
+
+
+# Copy to release folder for building the package
+$ReleasePath="G:\My Drive\05 - Travail\Revit Dev\GroupClashes\Releases\Current Release\GroupClashes.BM42.bundle\"
+xcopy /Y ($ProjectDir + "PackageContents.xml") $ReleasePath
+$releaseFolder = ($ReleasePath + "Contents\" + $revitVersion + "\")
+Write-Host "release folder" + $releaseFolder
+CopyToFolder $revitVersion $releaseFolder
+
+
+## Zip the package
+
+$BundleFolder = (get-item $ReleasePath ).parent.FullName
+
+$ReleaseZip = ($BundleFolder + "\" + $TargetName + ".zip")
+if (Test-Path $ReleaseZip) { Remove-Item $ReleaseZip }
+
+if ( Test-Path -Path $ReleasePath ) {
+  7z a -tzip $ReleaseZip ($BundleFolder + "\GroupClashes.BM42.bundle\")
 }
