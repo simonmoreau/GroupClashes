@@ -21,7 +21,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage Preview Release\Roamer.exe</StartProgram>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2024\Roamer.exe</StartProgram>
     <StartAction>Program</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2024Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage Preview Release\Roamer.exe</StartProgram>
+    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2024\Roamer.exe</StartProgram>
     <StartAction>Program</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2023Debug|AnyCPU' ">
@@ -149,12 +149,12 @@
     <!-- 2024 -->
     <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Api">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Api.dll</HintPath>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Clash">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Clash.dll</HintPath>
+      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Clash.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- 2023 -->
