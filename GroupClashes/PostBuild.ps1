@@ -6,56 +6,75 @@ write-host $ProjectDir
 write-host $TargetPath
 write-host $TargetDir
 
-# sign the dll
-$thumbPrint = "e729567d4e9be8ffca04179e3375b7669bccf272"
-$cert=Get-ChildItem -Path Cert:\CurrentUser\My -CodeSigningCert | Where { $_.Thumbprint -eq $thumbPrint}
+$filePaths = @()
 
-Set-AuthenticodeSignature -FilePath $TargetPath -Certificate $cert -IncludeChain All -TimestampServer "http://timestamp.comodoca.com/authenticode"
+# Function to create folder and copy files
+function CreateAndCopyContent {
+    param (
+        [string]$VersionSoftware,
+        [string]$ProjectDir,
+        [string]$TargetDir,
+        [string]$AddinMainFolder
+    )
 
-function CopyToFolder($revitVersion, $addinFolder) {
+    # Define the target folder path
+    $contentFolder = Join-Path -Path $AddinMainFolder -ChildPath ("Contents\" + $VersionSoftware)
 
-    if (Test-Path $addinFolder) {
-        try {
-            # Remove previous versions
-            Get-ChildItem -Path $addinFolder | Remove-Item -Recurse
-            
-            # Copy the addin file
-            Write-Host "copy all files" + ($TargetDir) + $addinFolder
-            xcopy ($TargetDir) ($addinFolder) /s /e /y
-        }
-        catch {
-            Write-Host "An error occurred:"
-            Write-Host $_
+    # Create the folder if it doesn't exist
+    if (-Not (Test-Path -Path $contentFolder)) {
+        New-Item -ItemType Directory -Path $contentFolder | Out-Null
+        Write-Host "Created folder: $contentFolder"
+    } else {
+        # Clear the folder's contents
+        Remove-Item -Path "$contentFolder\*" -Recurse -Force
+        Write-Host "Cleared contents of folder: $contentFolder"
+    }
+
+    # Copy entire build content to Contents\$VersionSoftware
+    Copy-Item -Path $TargetDir\* -Destination $contentFolder -Recurse -Force
+    Write-Host "Copied build content to $contentFolder"
+}
+
+function SignFiles($TargetDir) {
+    Get-ChildItem ($TargetDir) -Recurse | Where-Object { $_.extension -in ".exe", ".dll" } |
+    Foreach-Object {
+        $signature = Get-AuthenticodeSignature -FilePath $_.FullName
+
+        if ($signature.status -ne "Valid") {
+            # $filePaths = $filePaths + "`'" + $_.FullName +"`'" + " "
+            $filePaths += $_.FullName
         }
     }
+    Write-Host $filePaths
+
+    azuresigntool sign -du "https://www.eai.fr" `
+      -fd sha384 -kvu https://kv-eai-util-fr-signing.vault.azure.net/ `
+      -kvm `
+      -kvc EAICodeSigningCertificate `
+      -tr http://timestamp.digicert.com `
+      -td sha384 `
+      -v $filePaths
 }
 
+if ($Configuration -eq "Debug") {
 
-$revitVersion = $VersionSoftware
+    SignFiles $TargetDir
+    # create the addin folder and copy files
+    $addinMainFolder = ($env:APPDATA + "\Autodesk\ApplicationPlugins\GroupClashes.BM42.bundle\")
 
-# Copy to Addin folder for debug
-$addinMainFolder = ($env:APPDATA + "\Autodesk\ApplicationPlugins\GroupClashes.BM42.bundle\")
-xcopy /Y ($ProjectDir + "PackageContents.xml") $addinMainFolder
-$addinFolder = ($addinMainFolder + "Contents\" + $revitVersion + "\")
-Write-Host "addin folder" + $addinFolder
-CopyToFolder $revitVersion $addinFolder
+    # Create the main addin folder if it doesn't exist
+    if (-Not (Test-Path -Path $addinMainFolder)) {
+        New-Item -ItemType Directory -Path $addinMainFolder | Out-Null
+        Write-Host "Created folder: $addinMainFolder"
+    }
 
+    # Copy PackageContents.xml to Contents folder
+    $packageContentsSource = Join-Path -Path $ProjectDir -ChildPath "PackageContents.xml"
+    $packageContentsTarget = Join-Path -Path $addinMainFolder -ChildPath "PackageContents.xml"
+    Copy-Item -Path $packageContentsSource -Destination $packageContentsTarget -Force
+    Write-Host "Copied PackageContents.xml to Contents folder"
 
-# Copy to release folder for building the package
-$ReleasePath="G:\My Drive\05 - Travail\Revit Dev\GroupClashes\Releases\Current Release\GroupClashes.BM42.bundle\"
-xcopy /Y ($ProjectDir + "PackageContents.xml") $ReleasePath
-$releaseFolder = ($ReleasePath + "Contents\" + $revitVersion + "\")
-Write-Host "release folder" + $releaseFolder
-CopyToFolder $revitVersion $releaseFolder
-
-
-## Zip the package
-
-$BundleFolder = (get-item $ReleasePath ).parent.FullName
-
-$ReleaseZip = ($BundleFolder + "\" + $TargetName + ".zip")
-if (Test-Path $ReleaseZip) { Remove-Item $ReleaseZip }
-
-if ( Test-Path -Path $ReleasePath ) {
-  7z a -tzip $ReleaseZip ($BundleFolder + "\GroupClashes.BM42.bundle\")
+    # Call the function to create folder and copy files
+    CreateAndCopyContent -VersionSoftware $VersionSoftware -ProjectDir $ProjectDir -TargetDir $TargetDir -AddinMainFolder $addinMainFolder
 }
+
