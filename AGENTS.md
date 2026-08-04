@@ -107,7 +107,7 @@ These are the **target conventions for new code**. Existing code may not fully c
 
 ## Deployment
 
-- **Versioning**: manually bumped in `CommonAssemblyInfo.props` (edit via Ctrl+H). Current version: 1.1.5.
+- **Versioning**: manually bumped in `CommonAssemblyInfo.props` (edit via Ctrl+H). Current version: 1.1.8.
 - **Distribution**: published to the Autodesk App Store via `PackageContents.xml` (which also lists the supported Navisworks versions).
 - **Installation for debugging**: the PostBuild script deploys the Debug build to the Autodesk ApplicationPlugins bundle folder.
 
