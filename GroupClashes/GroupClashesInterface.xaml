@@ -10,9 +10,7 @@
             <Style.TargetType>
                 <x:Type TypeName="Button" />
             </Style.TargetType>
-            <Setter Property="Height" Value="23"/>
-            <Setter Property="Width" Value="75"/>
-            <Setter Property="Margin" Value="0,0,6,0" />
+            <Setter Property="Height" Value="26"/>
         </Style>
         <Style>
             <Style.TargetType>
@@ -56,7 +54,7 @@
             <Setter Property="Height" Value="18"/>
         </Style>
     </UserControl.Resources>
-    <Grid Margin="10">
+    <Grid Margin="8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -67,7 +65,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" x:Name="clashTestGroupBox" Header="Clash Test">
-            <Grid Margin="5">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -97,36 +95,38 @@
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" x:Name="methodGroupBox" Header="Grouping Mode">
-            <Grid Margin="5">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="2" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="2" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Content="Group by : "/>
                 <ComboBox Grid.Column="1" Grid.Row="0" Name="comboBoxGroupBy"
                           IsEnabled="False"
                           ItemsSource="{Binding Path=GroupByList}"/>
-                <Label Grid.Column="0" Grid.Row="1" Content="Then by : "/>
-                <ComboBox Grid.Column="1" Grid.Row="1" Name="comboBoxThenBy"
+                <Label Grid.Column="0" Grid.Row="2" Content="Then by : "/>
+                <ComboBox Grid.Column="1" Grid.Row="2" Name="comboBoxThenBy"
                           IsEnabled="False"
                           ItemsSource="{Binding Path=GroupThenList}"/>
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5,0,0,0">
+                    <CheckBox Name="keepExistingGroupsCheckBox" IsChecked="False" VerticalAlignment="Center"/>
+                    <Label Content="Keep existing groups"/>
+                </StackPanel>
             </Grid>
         </GroupBox>
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="5,0,0,0">
-            <CheckBox Name="keepExistingGroupsCheckBox" IsChecked="False" VerticalAlignment="Center"/>
-            <Label Content="Keep existing groups"/>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,5,0,0">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <!--<ProgressBar></ProgressBar>-->
-            <Button Content="Group" IsDefault="True" Name="Group_Button"
+            <Button Content="Group" IsDefault="True" Name="Group_Button" Margin="0,0,10,0" Width="80"
                     Click="Group_Button_Click"
                     IsEnabled="False"/>
-            <Button Content="Ungroup" Name="Ungroup_Button"
+            <Button Content="Ungroup" Name="Ungroup_Button" Width="80"
                     IsEnabled="False" Click="Ungroup_Button_Click"/>
         </StackPanel>
     </Grid>
