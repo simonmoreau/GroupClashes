@@ -434,7 +434,7 @@ namespace GroupClashes
 
         private static IEnumerable<ClashResult> GetIndividualClashResults(ClashTest clashTest, bool keepExistingGroup)
         {
-            for (var i = 0; i < clashTest.Children.Count; i++)
+            for (int i = 0; i < clashTest.Children.Count; i++)
             {
                 if (clashTest.Children[i].IsGroup)
                 {
@@ -453,7 +453,7 @@ namespace GroupClashes
 
         private static IEnumerable<ClashResultGroup> BackupExistingClashGroups(ClashTest clashTest)
         {
-            for (var i = 0; i < clashTest.Children.Count; i++)
+            for (int i = 0; i < clashTest.Children.Count; i++)
             {
                 if (clashTest.Children[i].IsGroup)
                 {
@@ -464,7 +464,7 @@ namespace GroupClashes
 
         private static IEnumerable<ClashResult> GetGroupResults(ClashResultGroup clashResultGroup)
         {
-            for (var i = 0; i < clashResultGroup.Children.Count; i++)
+            for (int i = 0; i < clashResultGroup.Children.Count; i++)
             {
                 yield return (ClashResult)clashResultGroup.Children[i];
             }
