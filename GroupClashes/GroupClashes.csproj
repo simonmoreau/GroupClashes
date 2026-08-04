@@ -1,294 +1,106 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3876FA5D-2B66-4859-A4CD-12F9020B4C29}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GroupClashes</RootNamespace>
-    <AssemblyName>GroupClashes.BM42</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2024Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\2024Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Version2024</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2024\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2024Release|AnyCPU' ">
-    <OutputPath>bin\2024Release\</OutputPath>
-    <DefineConstants>TRACE;Version2024</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2024\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2023Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\2023Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Version2023</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2023\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2023Release|AnyCPU' ">
-    <OutputPath>bin\2023Release\</OutputPath>
-    <DefineConstants>TRACE;Version2023</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2023\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2022Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\2022Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Version2022</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2022\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '2022Release|AnyCPU' ">
-    <OutputPath>bin\2022Release\</OutputPath>
-    <DefineConstants>TRACE;Version2022</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2022\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2021Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\2021Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Version2021</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2021\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2021Release|AnyCPU'">
-    <OutputPath>bin\2021Release\</OutputPath>
-    <DefineConstants>TRACE;Version2021</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2021\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2020Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\2020Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Version2020</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2020\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2020Release|AnyCPU'">
-    <OutputPath>bin\2020Release\</OutputPath>
-    <DefineConstants>TRACE;Version2020</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2020\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2019Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\2019Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Version2019</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2019\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2019Release|AnyCPU'">
-    <OutputPath>bin\2019Release\</OutputPath>
-    <DefineConstants>TRACE;Version2019</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <StartProgram>$(PROGRAMFILES)\Autodesk\Navisworks Manage 2019\Roamer.exe</StartProgram>
-    <StartAction>Program</StartAction>
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- 2024 -->
-    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Api">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == '2024Debug' OR '$(Configuration)' == '2024Release'" Include="Autodesk.Navisworks.Clash">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2024\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2023 -->
-    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Api">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == '2023Debug' OR '$(Configuration)' == '2023Release'" Include="Autodesk.Navisworks.Clash">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2023\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2022 -->
-    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Api">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2022\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == '2022Debug' OR '$(Configuration)' == '2022Release'" Include="Autodesk.Navisworks.Clash">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2022\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2021 -->
-    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Api">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2021\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == '2021Debug' OR '$(Configuration)' == '2021Release'" Include="Autodesk.Navisworks.Clash">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2021\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2020 -->
-    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Api">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == '2020Debug' OR '$(Configuration)' == '2020Release'" Include="Autodesk.Navisworks.Clash">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2019 -->
-    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Api">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Condition="'$(Configuration)' == '2019Debug' OR '$(Configuration)' == '2019Release'" Include="Autodesk.Navisworks.Clash">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramW6432)\Autodesk\Navisworks Manage 2020\Autodesk.Navisworks.Clash.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GroupClashes.cs" />
-    <Compile Include="GroupClashesHostingControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GroupClashesHostingControl.Designer.cs">
-      <DependentUpon>GroupClashesHostingControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GroupClashesInterface.xaml.cs">
-      <DependentUpon>GroupClashesInterface.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GroupClashesPane.cs" />
-    <Compile Include="GroupingFunctions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="GroupClashesInterface.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="GroupClashesHostingControl.resx">
-      <DependentUpon>GroupClashesHostingControl.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Images\GroupClashesIcon_Large.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\GroupClashesIcon_Small.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="PackageContents.xml">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="en-US\GroupClashes.name">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="en-US\GroupClashes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="PostBuild.ps1" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>powershell -ExecutionPolicy Unrestricted $(ProjectDir)PostBuild.ps1 -Configuration $(Configuration) -TargetName $(TargetName) -ProjectDir $(ProjectDir) -TargetPath $(TargetPath) -TargetDir $(TargetDir)</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project=".\..\CommonAssemblyInfo.props" />
+
+	<PropertyGroup>
+		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+		<OutputType>Library</OutputType>
+		<UseWindowsForms>true</UseWindowsForms>
+		<UseWPF>true</UseWPF>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+		<!-- Create the configuration to build various versions of Navisworks -->
+		<Configurations>Debug;2020;2021;2022;2023;2024</Configurations>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<Platforms>x64</Platforms>
+		<NuGetAudit>false</NuGetAudit>
+		<BuildInParallel>false</BuildInParallel>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<AssemblyName>GroupClashes.BM42</AssemblyName>
+		<RootNamespace>GroupClashes</RootNamespace>
+		<TargetFramework>net48</TargetFramework>
+		<NoWarn>MSB3052</NoWarn>
+	</PropertyGroup>
+
+	<!-- If the configuration is a Navisworks version,
+       we use this configuration as a variable
+       for the rest of the csproj -->
+	<PropertyGroup Condition="!$(Configuration.Contains('Debug'))">
+		<VersionSoftware>$(Configuration)</VersionSoftware>
+	</PropertyGroup>
+
+	<!-- Debug -->
+	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+		<!-- We can only debug just ONE addin version.
+         Instead of building all versions above,
+         we just put ONE version below and switch to 'Debug' configuration  -->
+		<VersionSoftware>2026</VersionSoftware>
+		<StartAction>Program</StartAction>
+		<StartProgram>$(ProgramW6432)\Autodesk\Navisworks Manage $(VersionSoftware)\Roamer.exe</StartProgram>
+	</PropertyGroup>
+
+	<!-- Release -->
+	<PropertyGroup Condition="!$(Configuration.Contains('Debug'))">
+		<Optimize>true</Optimize>
+		<OutputPath>bin\$(VersionSoftware)\</OutputPath>
+		<DefineConstants>VERSION$(VersionSoftware)</DefineConstants>
+		<DebugType>None</DebugType>
+	</PropertyGroup>
+
+	<!-- Debug -->
+	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE;VERSION$(VersionSoftware)</DefineConstants>
+		<DebugType>Full</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<NavisworksNugetVersion>$(VersionSoftware).*</NavisworksNugetVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Get the Autodesk.Navisworks.Api.dll, Autodesk.Navisworks.Clash.dll, ... -->
+		<PackageReference Include="Speckle.Navisworks.API" Version="$(NavisworksNugetVersion)" IncludeAssets="build; compile" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="PresentationCore" />
+		<Reference Include="PresentationFramework" />
+		<Reference Include="System.Windows" />
+		<Reference Include="System.Xaml" />
+		<Reference Include="System.Xml.Linq" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="UIAutomationProvider" />
+		<Reference Include="WindowsBase" />
+		<Reference Include="WindowsFormsIntegration" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Remove="en-US\GroupClashes.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="en-US\GroupClashes.name">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="en-US\GroupClashes.xaml">
+			<Generator>XamlIntelliSenseFileGenerator</Generator>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Images\GroupClashesIcon_Large.ico">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Images\GroupClashesIcon_Small.ico">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="PackageContents.xml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="powershell -ExecutionPolicy Unrestricted $(ProjectDir)PostBuild.ps1 -VersionSoftware $(VersionSoftware) -TargetName $(TargetName) -ProjectDir $(ProjectDir) -TargetPath $(TargetPath) -TargetDir $(TargetDir) -Configuration $(Configuration)" />
+	</Target>
+
 </Project>

@@ -352,11 +352,11 @@ namespace GroupClashes
 
                 if (mode == GroupingMode.ApprovedBy)
                 {
-                    clashProperty = copiedResult.ApprovedBy;
+                    clashProperty = copiedResult.ApprovedBy.ToString();
                 }
                 else if (mode == GroupingMode.AssignedTo)
                 {
-                    clashProperty = copiedResult.AssignedTo;
+                    clashProperty = copiedResult.AssignedTo.ToString();
                 }
                 else if (mode == GroupingMode.Status)
                 {

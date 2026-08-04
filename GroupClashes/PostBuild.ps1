@@ -1,4 +1,5 @@
-﻿param ($Configuration, $TargetName, $ProjectDir, $TargetPath, $TargetDir)
+﻿param ($VersionSoftware, $Configuration, $TargetName, $ProjectDir, $TargetPath, $TargetDir)
+write-host $VersionSoftware
 write-host $Configuration
 write-host $TargetName
 write-host $ProjectDir
@@ -30,7 +31,7 @@ function CopyToFolder($revitVersion, $addinFolder) {
 }
 
 
-$revitVersion = $Configuration.replace('Debug','').replace('Release','')
+$revitVersion = $VersionSoftware
 
 # Copy to Addin folder for debug
 $addinMainFolder = ($env:APPDATA + "\Autodesk\ApplicationPlugins\GroupClashes.BM42.bundle\")

@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <Company>BIM42</Company>
+    <Copyright>BIM42 2026</Copyright>
+    <Description>The Group Clashes Navisworks plugin</Description>
+    <Product>Group Clashes</Product>
+    <VersionSoftware>2024</VersionSoftware>
+    <FileVersion>1.1.4.0</FileVersion>
+    <Version>1.1.4</Version>
+  </PropertyGroup>
+</Project>
