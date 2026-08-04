@@ -1,28 +1,30 @@
 ﻿using System.Windows.Forms;
 using Autodesk.Navisworks.Api.Plugins;
 
-namespace GroupClashes
+namespace GroupClashes;
+
+/// <summary>
+/// Dock pane plugin that hosts the Group Clashes interface.
+/// </summary>
+[Plugin("GroupClashes.GroupClashesPane", "BM42", DisplayName = "Group Clashes", ToolTip = "Group clashes")]
+[DockPanePlugin(300, 380)]
+class GroupClashesPane : DockPanePlugin
 {
-    [Plugin("GroupClashes.GroupClashesPane", "BM42",DisplayName = "Group Clashes",ToolTip = "Group clashes")]
-    [DockPanePlugin(300, 380)]
-    class GroupClashesPane : DockPanePlugin
+    /// <inheritdoc />
+    public override Control CreateControlPane()
     {
-        public override Control CreateControlPane()
-        {
-            //create the control that will be used to display in the pane
-            GroupClashesHostingControl control = new GroupClashesHostingControl();
+        GroupClashesHostingControl control = new GroupClashesHostingControl();
 
-            control.Dock = DockStyle.Fill;
+        control.Dock = DockStyle.Fill;
 
-            //create the control
-            control.CreateControl();
+        control.CreateControl();
 
-            return control;
-        }
+        return control;
+    }
 
-        public override void DestroyControlPane(Control pane)
-        {
-            pane.Dispose();
-        }
+    /// <inheritdoc />
+    public override void DestroyControlPane(Control pane)
+    {
+        pane.Dispose();
     }
 }

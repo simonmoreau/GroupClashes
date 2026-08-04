@@ -1,84 +1,71 @@
 ﻿using System;
+using System.Diagnostics;
 using Autodesk.Navisworks.Api.Plugins;
 
-namespace GroupClashes
+namespace GroupClashes;
+
+/// <summary>
+/// Ribbon plugin that toggles the visibility of the Group Clashes dock pane.
+/// </summary>
+[Plugin("GroupClashes", "BM42", DisplayName = "Group Clashes")]
+[Strings("GroupClashes.name")]
+[RibbonLayout("GroupClashes.xaml")]
+[RibbonTab("ID_GroupClashesTab",
+    DisplayName = "Group Clashes")]
+[Command("ID_GroupClashesButton",
+         Icon = "GroupClashesIcon_Small.ico", LargeIcon = "GroupClashesIcon_Large.ico",
+         DisplayName = "Group Clashes")]
+class RibbonHandler : CommandHandlerPlugin
 {
-    [Plugin("GroupClashes", "BM42", DisplayName = "Group Clashes")]
-    [Strings("GroupClashes.name")]
-    [RibbonLayout("GroupClashes.xaml")]
-    [RibbonTab("ID_GroupClashesTab",
-        DisplayName = "Group Clashes")]
-    [Command("ID_GroupClashesButton",
-             Icon = "GroupClashesIcon_Small.ico", LargeIcon = "GroupClashesIcon_Large.ico",
-             DisplayName = "Group Clashes")]
-
-    class RibbonHandler : CommandHandlerPlugin
+    /// <inheritdoc />
+    public override int ExecuteCommand(string commandId, params string[] parameters)
     {
-        private bool m_toShowTab;
-        private bool m_toEnableButton;
-
-        public RibbonHandler()
+        if (Autodesk.Navisworks.Api.Application.IsAutomated)
         {
-            m_toShowTab = false; // to show tab or not
-            m_toEnableButton = false; // to enable button or not
+            throw new InvalidOperationException("Invalid when running using Automation");
         }
 
-        public override int ExecuteCommand(string commandId, params string[] parameters)
+        PluginRecord pluginRecord = Autodesk.Navisworks.Api.Application.Plugins.FindPlugin("GroupClashes.GroupClashesPane.BM42");
+
+        if (pluginRecord is DockPanePluginRecord && pluginRecord.IsEnabled)
         {
-            if (Autodesk.Navisworks.Api.Application.IsAutomated)
+            if (pluginRecord.LoadedPlugin is null)
             {
-                throw new InvalidOperationException("Invalid when running using Automation");
+                pluginRecord.LoadPlugin();
             }
 
-            //Find the plugin
-            PluginRecord pr = Autodesk.Navisworks.Api.Application.Plugins.FindPlugin("GroupClashes.GroupClashesPane.BM42");
-
-            if (pr != null && pr is DockPanePluginRecord && pr.IsEnabled)
+            DockPanePlugin dockPanePlugin = pluginRecord.LoadedPlugin as DockPanePlugin;
+            if (dockPanePlugin is not null)
             {
-                //check if it needs loading
-                if (pr.LoadedPlugin == null)
-                {
-                    pr.LoadPlugin();
-                }
-
-                DockPanePlugin dpp = pr.LoadedPlugin as DockPanePlugin;
-                if (dpp != null)
-                {
-                    //switch the Visible flag
-                    dpp.Visible = !dpp.Visible;
-                }
+                dockPanePlugin.Visible = !dockPanePlugin.Visible;
             }
-
-            //groupClashesInterface.ShowDialog();
-            return 0;
         }
 
-        public override CommandState CanExecuteCommand(String commandId)
-        {
-            CommandState state = new CommandState();
-            state.IsVisible = true;
-            state.IsEnabled = true;
-            state.IsChecked = true;
+        return 0;
+    }
 
-            return state;
-        }
+    /// <inheritdoc />
+    public override CommandState CanExecuteCommand(string commandId)
+    {
+        CommandState state = new CommandState();
+        state.IsVisible = true;
+        state.IsEnabled = true;
+        state.IsChecked = true;
 
-        public override bool CanExecuteRibbonTab(string name)
-        {
-            return true;
-        }
+        return state;
+    }
 
-        public override bool TryShowCommandHelp(string name)
-        {
-            //FileInfo dllFileInfo = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            //string pathToHtmlFile = Path.Combine(dllFileInfo.Directory.FullName, @"Help\Help.html");
-            string helpUrl = @"https://witty-river-01a861010.2.azurestaticapps.net/GroupClashes/GroupClashes.html";
-            System.Diagnostics.Process.Start(helpUrl);
-            return true;
-        }
+    /// <inheritdoc />
+    public override bool CanExecuteRibbonTab(string name)
+    {
+        return true;
+    }
 
-
+    /// <inheritdoc />
+    public override bool TryShowCommandHelp(string name)
+    {
+        string helpUrl = @"https://witty-river-01a861010.2.azurestaticapps.net/GroupClashes/GroupClashes.html";
+        Process.Start(helpUrl);
+        return true;
     }
 }
-
-

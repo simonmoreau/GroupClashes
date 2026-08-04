@@ -18,6 +18,7 @@
 		<AssemblyName>GroupClashes.BM42</AssemblyName>
 		<RootNamespace>GroupClashes</RootNamespace>
 		<TargetFramework>net48</TargetFramework>
+		<LangVersion>latest</LangVersion>
 		<NoWarn>MSB3052</NoWarn>
 	</PropertyGroup>
 
