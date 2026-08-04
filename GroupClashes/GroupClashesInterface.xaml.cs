@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
@@ -16,7 +17,7 @@ public partial class GroupClashesInterface : UserControl
     /// <summary>
     /// Gets the clash tests available in the current document.
     /// </summary>
-    public ObservableCollection<CustomClashTest> ClashTests { get; set; }
+    public ObservableCollection<DisplayedClashTest> ClashTests { get; set; }
 
     /// <summary>
     /// Gets the grouping modes available for the "Group by" selection.
@@ -37,7 +38,7 @@ public partial class GroupClashesInterface : UserControl
     {
         InitializeComponent();
 
-        ClashTests = new ObservableCollection<CustomClashTest>();
+        ClashTests = new ObservableCollection<DisplayedClashTest>();
         GroupByList = new ObservableCollection<GroupingMode>();
         GroupThenList = new ObservableCollection<GroupingMode>();
 
@@ -54,7 +55,7 @@ public partial class GroupClashesInterface : UserControl
 
             foreach (object selectedItem in ClashTestListBox.SelectedItems)
             {
-                CustomClashTest selectedClashTest = (CustomClashTest)selectedItem;
+                DisplayedClashTest selectedClashTest = (DisplayedClashTest)selectedItem;
                 ClashTest clashTest = selectedClashTest.ClashTest;
 
                 if (clashTest.Children.Count != 0)
@@ -99,7 +100,7 @@ public partial class GroupClashesInterface : UserControl
 
             foreach (object selectedItem in ClashTestListBox.SelectedItems)
             {
-                CustomClashTest selectedClashTest = (CustomClashTest)selectedItem;
+                DisplayedClashTest selectedClashTest = (DisplayedClashTest)selectedItem;
                 ClashTest clashTest = selectedClashTest.ClashTest;
 
                 if (clashTest.Children.Count != 0)
@@ -141,24 +142,50 @@ public partial class GroupClashesInterface : UserControl
 
     private void GetClashTests()
     {
-        DocumentClashTests dct = Application.MainDocument.GetClash().TestsData;
+        DocumentClashTests documentClashTests = Application.MainDocument.GetClash().TestsData;
         ClashTests.Clear();
 
-        foreach (SavedItem savedItem in dct.Tests)
+        List<ClashTest> clashTests = GetClashTests(documentClashTests);
+
+        foreach (ClashTest clashTest in clashTests)
         {
-            if (savedItem.GetType() == typeof(ClashTest))
+            if (clashTest != null)
             {
-                ClashTests.Add(new CustomClashTest(savedItem as ClashTest));
+                ClashTests.Add(new DisplayedClashTest(clashTest));
             }
         }
     }
 
+    private List<ClashTest?> GetClashTests(DocumentClashTests allTests)
+    {
+        List<SavedItem?> savedItems = new List<SavedItem?>();
+#if VERSION2027
+        savedItems = GetClashTestsRecursive(allTests.Value.TestsRoot).Cast<SavedItem?>().ToList();
+#else
+        savedItems = allTests.Tests.ToList();
+#endif
+        List<ClashTest?> clashTests = new List<ClashTest?>();
+        foreach (SavedItem? savedItem in savedItems)
+        {
+            ClashTest? clashTest = (ClashTest?)savedItem;
+            clashTests.Add(clashTest);
+        }
+        return clashTests;
+    }
+
     private void CheckPlugin()
     {
+#if VERSION2027
+        if (Application.MainDocument is null
+            || Application.MainDocument.IsClear
+            || Application.MainDocument.GetClash() is null
+            || Application.MainDocument.GetClash().TestsData.Value.TestsRoot.Children.Count == 0)
+#else
         if (Application.MainDocument is null
             || Application.MainDocument.IsClear
             || Application.MainDocument.GetClash() is null
             || Application.MainDocument.GetClash().TestsData.Tests.Count == 0)
+#endif
         {
             Group_Button.IsEnabled = false;
             comboBoxGroupBy.IsEnabled = false;
@@ -196,87 +223,43 @@ public partial class GroupClashesInterface : UserControl
         comboBoxGroupBy.SelectedIndex = 0;
         comboBoxThenBy.SelectedIndex = 0;
     }
-}
 
-/// <summary>
-/// Wraps a <see cref="ClashTest"/> and exposes its display and selection names.
-/// </summary>
-public class CustomClashTest
-{
-    private ClashTest _clashTest;
-
-    /// <summary>
-    /// Creates a new <see cref="CustomClashTest"/> wrapping the given clash test.
-    /// </summary>
-    /// <param name="test">The clash test to wrap.</param>
-    public CustomClashTest(ClashTest test)
+    private List<ClashTest> GetClashTestsRecursive(SavedItem root)
     {
-        _clashTest = test;
-    }
 
-    /// <summary>
-    /// Gets the display name of the wrapped clash test.
-    /// </summary>
-    public string DisplayName
-    {
-        get { return _clashTest.DisplayName; }
-    }
+        List<ClashTest> result = new List<ClashTest>();
 
-    /// <summary>
-    /// Gets the wrapped clash test.
-    /// </summary>
-    public ClashTest ClashTest
-    {
-        get { return _clashTest; }
-    }
-
-    /// <summary>
-    /// Gets the name of the selection A of the wrapped clash test.
-    /// </summary>
-    public string SelectionAName
-    {
-        get { return GetSelectedItem(_clashTest.SelectionA); }
-    }
-
-    /// <summary>
-    /// Gets the name of the selection B of the wrapped clash test.
-    /// </summary>
-    public string SelectionBName
-    {
-        get { return GetSelectedItem(_clashTest.SelectionB); }
-    }
-
-    private string GetSelectedItem(ClashSelection selection)
-    {
-        string result = "";
-        if (selection.Selection.HasSelectionSources)
+        if (root is ClashTestFolder folder)
         {
-            result = selection.Selection.SelectionSources.FirstOrDefault().ToString();
-            if (result.Contains("lcop_selection_set_tree\\"))
+            foreach (SavedItem child in folder.Children)
             {
-                result = result.Replace("lcop_selection_set_tree\\", "");
-            }
-
-            if (selection.Selection.SelectionSources.Count > 1)
-            {
-                result = result + " (and other selection sets)";
+                if (child is ClashTest clashTest)
+                {
+                    result.Add(clashTest);
+                }
+                else if (child is FolderItem subFolder)
+                {
+                    result.AddRange(GetClashTestsRecursive(subFolder));
+                }
             }
         }
-        else if (selection.Selection.GetSelectedItems().Count == 0)
+        else if (root is FolderItem folderItem)
         {
-            result = "No item have been selected.";
-        }
-        else if (selection.Selection.GetSelectedItems().Count == 1)
-        {
-            result = selection.Selection.GetSelectedItems().FirstOrDefault().DisplayName;
-        }
-        else
-        {
-            result = selection.Selection.GetSelectedItems().FirstOrDefault().DisplayName;
-            foreach (ModelItem item in selection.Selection.GetSelectedItems().Skip(1))
+            foreach (SavedItem child in folderItem.Children)
             {
-                result = result + "; " + item.DisplayName;
+                if (child is ClashTest clashTest)
+                {
+                    result.Add(clashTest);
+                }
+                else if (child is FolderItem subFolder)
+                {
+                    result.AddRange(GetClashTestsRecursive(subFolder));
+                }
             }
+        }
+        else if (root is ClashTest clashTest)
+        {
+            result.Add(clashTest);
         }
 
         return result;

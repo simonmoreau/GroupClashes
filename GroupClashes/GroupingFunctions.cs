@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using Autodesk.Navisworks.Api;
 using Autodesk.Navisworks.Api.Clash;
@@ -386,41 +387,54 @@ public static class GroupingFunctions
         using (Transaction tx = Application.MainDocument.BeginTransaction("Group clashes"))
         {
             ClashTest copiedClashTest = (ClashTest)selectedClashTest.CreateCopyWithoutChildren();
+            GroupItem folder = selectedClashTest.Parent;
             ClashTest backupTest = (ClashTest)selectedClashTest.CreateCopy();
             DocumentClash documentClash = Application.MainDocument.GetClash();
-            int indexOfClashTest = documentClash.TestsData.Tests.IndexOf(selectedClashTest);
-            documentClash.TestsData.TestsReplaceWithCopy(indexOfClashTest, copiedClashTest);
+            DocumentClashTests documentClashTestsData = documentClash.TestsData;
+
+#if VERSION2027
+                int indexOfClashTest = folder.Children.IndexOf(selectedClashTest);
+                documentClashTestsData.TestsReplaceWithCopy(folder, indexOfClashTest, copiedClashTest);
+#else
+            SavedItemCollection allTests = documentClashTestsData.Tests;
+            int indexOfClashTest = allTests.IndexOf(selectedClashTest);
+            documentClashTestsData.TestsReplaceWithCopy(indexOfClashTest, copiedClashTest);
+#endif
 
             int currentProgress = 0;
             int totalProgress = ungroupedClashResults.Count + clashGroups.Count;
             Progress progressBar = Application.BeginProgress("Copying Results", "Copying results from " + selectedClashTest.DisplayName + " to the Group Clashes pane...");
+
             foreach (ClashResultGroup clashResultGroup in clashGroups)
             {
                 if (progressBar.IsCanceled)
                 {
                     break;
                 }
-                documentClash.TestsData.TestsAddCopy((GroupItem)documentClash.TestsData.Tests[indexOfClashTest], clashResultGroup);
+
+                documentClashTestsData.TestsAddCopy((GroupItem)folder.Children[indexOfClashTest], clashResultGroup);
                 currentProgress++;
                 progressBar.Update((double)currentProgress / totalProgress);
             }
+
             foreach (ClashResult clashResult in ungroupedClashResults)
             {
                 if (progressBar.IsCanceled)
                 {
                     break;
                 }
-                documentClash.TestsData.TestsAddCopy((GroupItem)documentClash.TestsData.Tests[indexOfClashTest], clashResult);
+                documentClash.TestsData.TestsAddCopy((GroupItem)folder.Children[indexOfClashTest], clashResult);
                 currentProgress++;
                 progressBar.Update((double)currentProgress / totalProgress);
             }
             if (progressBar.IsCanceled)
             {
-                documentClash.TestsData.TestsReplaceWithCopy(indexOfClashTest, backupTest);
+                documentClashTestsData.TestsReplaceWithCopy(copiedClashTest, indexOfClashTest, backupTest);
             }
             tx.Commit();
             Application.EndProgress();
         }
+
     }
 
     private static List<ClashResult> RemoveOneClashGroup(ref List<ClashResultGroup> clashResultGroups)

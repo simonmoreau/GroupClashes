@@ -9,7 +9,7 @@
 		<UseWPF>true</UseWPF>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<!-- Create the configuration to build various versions of Navisworks -->
-		<Configurations>Debug;2020;2021;2022;2023;2024</Configurations>
+		<Configurations>Debug;2020;2021;2022;2023;2024;2025;2026;2027</Configurations>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<Platforms>x64</Platforms>
 		<NuGetAudit>false</NuGetAudit>
@@ -34,7 +34,7 @@
 		<!-- We can only debug just ONE addin version.
          Instead of building all versions above,
          we just put ONE version below and switch to 'Debug' configuration  -->
-		<VersionSoftware>2026</VersionSoftware>
+		<VersionSoftware>2027</VersionSoftware>
 		<StartAction>Program</StartAction>
 		<StartProgram>$(ProgramW6432)\Autodesk\Navisworks Manage $(VersionSoftware)\Roamer.exe</StartProgram>
 	</PropertyGroup>

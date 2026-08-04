@@ -42,11 +42,13 @@ The core domain logic lives in `GroupingFunctions.cs`:
 
 The csproj uses a Navisworks-version selector. The configuration name becomes the `VersionSoftware` property:
 
-- `<Configurations>Debug;2020;2021;2022;2023;2024</Configurations>`
+- `<Configurations>Debug;2020;2021;2022;2023;2024;2025;2026;2027</Configurations>`
 - When the configuration is not `Debug`, `VersionSoftware` = the configuration name.
 - `VersionSoftware` drives the `Speckle.Navisworks.API` NuGet package version (`$(VersionSoftware).*`), the `VERSION$(VersionSoftware)` define constant, and the output path (`bin\$(VersionSoftware)\`).
 
-**Debug builds target exactly one Navisworks version.** The Debug block in the csproj pins `<VersionSoftware>2026</VersionSoftware>` and sets `StartProgram` to that version's `Roamer.exe`. To debug against another version (e.g. 2027), change that single value.
+**Debug builds target exactly one Navisworks version.** The Debug block in the csproj pins `<VersionSoftware>2027</VersionSoftware>` and sets `StartProgram` to that version's `Roamer.exe`. To debug against another version (e.g. 2026), change that single value.
+
+The Navisworks 2027 SDK changed the clash API: `DocumentClashTests.Tests` became `DocumentClashTests.Value.TestsRoot.Children`, and `TestsReplaceWithCopy` now requires a parent `GroupItem` argument. Code handling these members is branched with `#if VERSION2027` (the 2020–2026 API still exposes the old members).
 
 Supported versions: **2020–2027**.
 
